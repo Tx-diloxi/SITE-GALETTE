@@ -1,0 +1,17 @@
+.vague-formulaire {
+  background: #111111;
+}
+
+.titre {
+  width: 70%;
+}
+
+#intro .intro_mascotte {
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  .titre {
+    width: 100%;
+  }
+}/*# sourceMappingURL=contact.css.map */

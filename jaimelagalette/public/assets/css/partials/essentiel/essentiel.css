@@ -1,0 +1,35 @@
+#essentiel {
+  background-color: #111111;
+}
+#essentiel .grid-4-essentiel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 24px;
+  width: 75%;
+  position: relative;
+}
+#essentiel .mascotte {
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  pointer-events: none;
+  max-height: 400px;
+}
+
+@media (max-width: 768px) {
+  #essentiel .grid-4-essentiel {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    width: 100%;
+  }
+  #essentiel .mascotte {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-height: none;
+    margin-top: 2rem;
+  }
+}/*# sourceMappingURL=essentiel.css.map */

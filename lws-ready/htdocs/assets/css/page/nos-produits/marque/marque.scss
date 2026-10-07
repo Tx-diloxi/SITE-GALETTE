@@ -1,0 +1,22 @@
+@use "../../../_variables" as *;
+
+.vague-carrousel {
+    background: $anthracite;
+}
+
+#a_propos {
+    background: $anthracite;
+}
+
+.vague-contact {
+    background: $nuit;
+}
+
+.vague-transition {
+    background: $nuit;
+    transform: rotate(180deg);
+}
+
+#partenaires {
+    background: $anthracite;
+}

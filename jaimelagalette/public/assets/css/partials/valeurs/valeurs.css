@@ -1,0 +1,33 @@
+#valeurs {
+  background-color: #111111;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 70px;
+}
+#valeurs .mascotte {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  pointer-events: none;
+  max-height: 300px;
+}
+@media (max-width: 1024px) {
+  #valeurs .mascotte {
+    max-height: 220px;
+  }
+  #valeurs .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  #valeurs .mascotte {
+    display: none;
+  }
+  #valeurs .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=valeurs.css.map */

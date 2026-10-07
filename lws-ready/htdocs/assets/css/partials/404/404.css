@@ -1,0 +1,75 @@
+#page_404 {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#page_404 .conteneur_404 {
+  max-width: 900px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+#page_404 .conteneur_404 .code_404 {
+  font-family: "Montserrat", blackitalic;
+  font-size: clamp(6rem, 20vw, 12rem);
+  font-weight: 900;
+  color: #EE7325;
+  line-height: 0.9;
+  margin: 0;
+  letter-spacing: -5px;
+}
+#page_404 .conteneur_404 .titre_404 {
+  font-family: "Montserrat", blackitalic;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: #F0F0F0;
+  margin: 1.5rem 0 0.5rem;
+  font-weight: 700;
+}
+#page_404 .conteneur_404 .message_404 {
+  font-family: "Dancing Script", bold;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  margin-bottom: 3rem;
+  font-style: italic;
+  max-width: 600px;
+  text-align: center;
+}
+#page_404 .conteneur_404 .bouton_accueil_404 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 1;
+}
+#page_404 .conteneur_404 button {
+  background-color: transparent;
+  border: 2px solid #EE7325;
+  color: #EE7325;
+}
+#page_404 .conteneur_404 button:hover {
+  background-color: #B84800;
+  color: #F0F0F0;
+}
+#page_404 .conteneur_404 > div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  #page_404 {
+    min-height: 70vh;
+  }
+  #page_404 .conteneur_404 .code_404 {
+    letter-spacing: -2px;
+  }
+  #page_404 .conteneur_404 .titre_404 {
+    font-size: 1.8rem;
+  }
+  #page_404 .conteneur_404 .message_404 {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}/*# sourceMappingURL=404.css.map */

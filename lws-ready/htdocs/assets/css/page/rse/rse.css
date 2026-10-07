@@ -1,0 +1,26 @@
+.vague-contact {
+  background: #111111;
+}
+
+.vague-transition {
+  transform: rotate(180deg);
+  background: #111111;
+}
+
+#actions_rse .actions-rse-bloc:nth-child(1) {
+  display: none !important;
+}
+
+#a_propos {
+  background: #1E1E1E;
+}
+#a_propos .vague {
+  display: none;
+}
+#a_propos p {
+  width: 60%;
+}
+#a_propos > img:not(.vague) {
+  width: auto !important;
+  right: 10% !important;
+}/*# sourceMappingURL=rse.css.map */

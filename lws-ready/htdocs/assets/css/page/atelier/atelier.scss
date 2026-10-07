@@ -1,0 +1,141 @@
+@use "../../_variables" as *;
+
+.vague-contact {
+    background-color: $nuit;
+}
+#atelier-infos {
+    background-color: $nuit;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 70px;
+
+    .grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+        background-color: $anthracite;
+        border-radius: $border-radius;
+        border: 2px solid $gris-charbon;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        span:first-child {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: $blanc-casse;
+            text-transform: uppercase;
+        }
+
+        a {
+            color: $orange-galette;
+            text-decoration: none;
+            font-size: 1.1rem;
+            word-break: break-all;
+
+            &:hover {
+                color: $orange-brule;
+            }
+        }
+    }
+
+    .horaires-list {
+        width: 100%;
+    }
+
+    .horaire-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 0.9rem;
+        border-bottom: 1px solid $gris-charbon;
+        color: $gris-text;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &.aujourdhui {
+            color: $orange-galette;
+            font-weight: 700;
+        }
+    }
+
+    .atelier-status-badge {
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        padding: 1rem;
+        border-radius: $border-radius-bouton;
+        width: fit-content;
+        margin: 0 auto;
+
+        &.ouvert {
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        &.ferme {
+            background-color: rgba(255, 71, 87, 0.15);
+            color: #ff4757;
+        }
+    }
+}
+
+#atelier-offres {
+    background-color: $nuit;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 70px;
+
+    .offres-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 0 10%;
+    }
+
+    .card {
+        p {
+            margin: 0 0 1rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .vague {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: -1;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    #atelier-infos {
+        .grid-2 {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #atelier-offres {
+        .offres-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}

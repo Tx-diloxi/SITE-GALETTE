@@ -1,0 +1,278 @@
+@use "../../_variables" as *;
+
+// ── Section offres d'emploi ───────────────────
+#offres-emploi {
+    background-color: $nuit;
+    position: relative;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+
+    .offres-grille {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 10%;
+        margin-bottom: 3rem;
+    }
+
+    .offre-carte {
+        background-color: $anthracite;
+        border-radius: $border-radius;
+        padding: 2rem 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2rem;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+
+        .offre-titre, .offre-metadonnees {
+            text-align: left;
+        }
+
+        .offre-titre {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: $blanc-casse;
+            margin-bottom: 0.75rem;
+            text-transform: none;
+        }
+
+        .offre-metadonnees {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .offre-metadonnee {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: $gris-text;
+            font-size: 0.95rem;
+
+            svg {
+                stroke: $gris-text;
+                flex-shrink: 0;
+            }
+        }
+
+        .offre-cta-container {
+            flex-shrink: 0;
+
+            .offre-cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.75rem;
+                background-color: $gris-charbon;
+                color: $blanc-casse;
+                padding: 0.75rem 1.5rem;
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 600;
+                font-size: 0.95rem;
+                text-decoration: none;
+                border-radius: $border-radius-bouton;
+                border: 1px solid rgba($blanc-casse, 0.1);
+                transition: background-color 0.3s ease, border-color 0.3s ease;
+
+                svg {
+                    transition: transform 0.2s ease;
+                }
+
+                &:hover {
+                    background-color: lighten($gris-charbon, 5%);
+                    border-color: $orange-galette;
+
+                    svg {
+                        transform: translateX(3px);
+                    }
+                }
+            }
+        }
+    }
+
+    // Candidature spontanee
+    .candidature-spontanee {
+        background-color: $orange-galette;
+        margin: 0 10%;
+        padding: 2.5rem 2rem;
+        border-radius: $border-radius;
+        text-align: center;
+        color: $blanc-casse;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+
+        .candidature-spontanee-icone,
+        .candidature-spontanee-cta {
+            display: none;
+        }
+
+        .candidature-spontanee-titre {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-style: italic;
+            color: $blanc-casse;
+            text-transform: none;
+            margin: 0;
+        }
+
+        .candidature-spontanee-description {
+            font-size: 1rem;
+            font-weight: 400;
+            color: $blanc-casse;
+            text-align: center;
+            margin: 0;
+            opacity: 0.9;
+        }
+    }
+}
+
+// ── Modal de detail d'offre ───────────────────
+.offre-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 1rem;
+
+    &.is-open {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.offre-modal {
+    background-color: $anthracite;
+    border-radius: $border-radius;
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 2.5rem;
+
+    .offre-modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1.25rem;
+        background: none;
+        border: none;
+        color: $gris-text;
+        font-size: 1.75rem;
+        cursor: pointer;
+        line-height: 1;
+        padding: 0;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: $blanc-casse;
+        }
+    }
+
+    .offre-modal-titre {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: $blanc-casse;
+        margin: 0 0 1rem 0;
+        text-transform: none;
+        padding-right: 2rem;
+    }
+
+    .offre-modal-metadonnees {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .offre-modal-badge {
+        display: inline-flex;
+        align-items: center;
+        background-color: $gris-charbon;
+        color: $gris-text;
+        font-size: 0.85rem;
+        padding: 0.35rem 0.85rem;
+        border-radius: 20px;
+        border: 1px solid rgba($blanc-casse, 0.08);
+    }
+
+    .offre-modal-description {
+        color: $blanc-casse;
+        font-size: 1rem;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
+}
+
+// ── Responsive ────────────────────────────────
+@media (max-width: 1024px) {
+    #offres-emploi {
+        .offres-grille, .candidature-spontanee {
+            padding: 2rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #offres-emploi {
+        padding-top: 4rem;
+
+        .titre {
+            padding: 0 6%;
+            margin-bottom: 2.5rem;
+        }
+
+        .offres-grille {
+            padding: 0 6%;
+            gap: 1rem;
+        }
+
+        .offre-carte {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 1.5rem;
+
+            .offre-metadonnees {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .offre-cta-container {
+                width: 100%;
+
+                .offre-cta {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .candidature-spontanee {
+            margin: 0 6%;
+            padding: 2rem 1.5rem;
+
+            .candidature-spontanee-titre {
+                font-size: 1.15rem;
+            }
+
+            .candidature-spontanee-description {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}

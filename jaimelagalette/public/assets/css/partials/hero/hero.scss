@@ -1,0 +1,92 @@
+@use "../../_variables" as *;
+
+// ── Section hero ──────────────────────────────
+#hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: transparent;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+    &.is-loaded {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h1 {
+        font-size: $h1-pc-taille;
+        font-family: $h1-font;
+        line-height: 0.85;
+        font-weight: 900;
+        letter-spacing: -2px;
+        text-transform: uppercase;
+
+        span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        span.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        span:nth-child(2) {
+            color: $orange-galette;
+        }
+    }
+
+    p {
+        font-style: italic;
+        font-family: $h3-font;
+        font-size: 1.5rem;
+        margin-top: 2rem;
+        max-width: 600px;
+    }
+
+    .hero_crepe {
+        position: absolute;
+        bottom: 0;
+        height: 80%;
+        width: auto;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0;
+        transform: translateX(80px);
+        transition: opacity 0.7s ease-out 0.4s, transform 0.7s ease-out 0.4s;
+    }
+
+    &.is-loaded .hero_crepe {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    @media (max-width: 1024px) {
+        h1 {
+            font-size: 5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        p {
+            text-align: center;
+            padding-top: 14rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        .hero_crepe {
+            top: 30%;
+            height: auto;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+#circuit-court {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 0;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 70px;
+  background-color: #1E1E1E;
+}
+#circuit-court img.vague {
+  transform: rotate(180deg);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+#circuit-court p {
+  max-width: 80%;
+}/*# sourceMappingURL=circuit-court.css.map */

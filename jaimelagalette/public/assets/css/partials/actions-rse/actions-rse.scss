@@ -1,0 +1,189 @@
+@use "../../_variables" as *;
+
+// ── Section Actions RSE ───────────────────────
+#actions_rse {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+
+    .actions-rse-liste {
+        display: flex;
+        flex-direction: column;
+    }
+
+    div {
+        padding: 0;
+    }
+
+    .actions-rse-bloc {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        height: 100vh;
+        gap: 70px;
+        padding: 150px 10%;
+        color: $blanc-casse;
+
+        .actions-rse-visuel {
+            width: 40%;
+            max-width: 460px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+
+            img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+        }
+
+        .actions-rse-contenu {
+            position: relative;
+            z-index: 1;
+        }
+
+        .actions-rse-surtitre {
+            font-family: $h3-font;
+            font-size: 2rem;
+            color: $orange-galette;
+            margin: 0 0 0.5rem;
+        }
+
+        .actions-rse-titre {
+            font-family: $h2-font;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            line-height: 1.05;
+            margin: 0 0 1rem;
+        }
+
+        .actions-rse-texte {
+            color: $blanc-casse;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin: 3rem 0;
+        }
+
+        .actions-rse-tags {
+            color: $orange-galette;
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0;
+        }
+
+        .actions-rse-vague {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        &:nth-child(odd) {
+            background: linear-gradient($orange-brule, $nuit);
+
+            .actions-rse-vague--noir {
+                display: block;
+                transform: rotate(180deg);
+            }
+        }
+
+        &:nth-child(even) {
+            background-color: $nuit;
+            flex-direction: row-reverse;
+
+            .actions-rse-surtitre {
+                color: $blanc-casse;
+            }
+
+            .actions-rse-vague--orange {
+                display: block;
+            }
+        }
+
+        &:last-child {
+            .actions-rse-vague--noir,
+            .actions-rse-vague--orange {
+                display: none;
+            }
+
+            .actions-rse-vague--anthracite {
+                display: block;
+            }
+        }
+
+        &:nth-child(1) {
+            background: $anthracite;
+        }
+    }
+}
+
+// ── Responsive ────────────────────────────────
+@media (max-width: 1024px) {
+    #actions_rse .actions-rse-bloc {
+        padding: 90px 6vw 130px;
+        gap: 40px;
+    }
+
+    #actions_rse .actions-rse-visuel {
+        width: 45%;
+    }
+
+    #actions_rse .actions-rse-contenu {
+        width: 55%;
+    }
+
+    #actions_rse .actions-rse-titre {
+        font-size: 2.4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #actions_rse .actions-rse-bloc {
+        flex-direction: column;
+        padding: 80px 1.5rem 120px;
+        min-height: auto;
+        height: auto;
+    }
+
+    #actions_rse .actions-rse-visuel {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #actions_rse .actions-rse-contenu {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #actions_rse .actions-rse-surtitre {
+        font-size: 1.6rem;
+    }
+
+    #actions_rse .actions-rse-titre {
+        font-size: 2.2rem;
+    }
+
+    #actions_rse .actions-rse-texte {
+        text-align: center;
+    }
+
+    #actions_rse .actions-rse-bloc:nth-child(even) {
+        flex-direction: column;
+    }
+
+    p {
+        text-align: center;
+    }
+}

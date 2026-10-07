@@ -1,0 +1,71 @@
+#recrutement-pourquoi {
+  background-color: #111111;
+  position: relative;
+  padding-bottom: 12rem;
+}
+#recrutement-pourquoi .grid-3-recrutement {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 0 10%;
+  position: relative;
+  z-index: 2;
+}
+#recrutement-pourquoi .recrutement-card {
+  background-color: #1E1E1E;
+  border: none;
+  padding: 3rem 2rem;
+  justify-content: center;
+}
+#recrutement-pourquoi .recrutement-card img {
+  height: 40px;
+  width: auto;
+  margin-bottom: 1.5rem;
+}
+#recrutement-pourquoi .recrutement-card .recrutement-card-titre {
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 1px;
+  color: #888888;
+  margin-bottom: 1.5rem;
+}
+#recrutement-pourquoi .recrutement-card .recrutement-card-description {
+  font-size: 0.95rem;
+  color: #F0F0F0;
+  line-height: 1.6;
+  font-weight: 300;
+}
+#recrutement-pourquoi .vague-recrutement {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  #recrutement-pourquoi {
+    padding-bottom: 8rem;
+  }
+  #recrutement-pourquoi .grid-3-recrutement {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  #recrutement-pourquoi {
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+  }
+  #recrutement-pourquoi .grid-3-recrutement {
+    grid-template-columns: 1fr;
+    padding: 0 6%;
+  }
+  #recrutement-pourquoi .titre {
+    margin-bottom: 2rem;
+  }
+}/*# sourceMappingURL=pourquoi-nous-rejoindre.css.map */

@@ -1,0 +1,36 @@
+#livraison {
+  background-color: #050504;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+#livraison h2 {
+  width: 60%;
+}
+#livraison p {
+  width: 50%;
+}
+
+@media (max-width: 1024px) {
+  #livraison h2 {
+    width: 80%;
+  }
+  #livraison p {
+    width: 70%;
+  }
+}
+@media (max-width: 768px) {
+  #livraison h2,
+  #livraison p {
+    width: 100%;
+  }
+  #livraison {
+    background-size: contain;
+  }
+  #livraison div:last-of-type {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2rem;
+  }
+}/*# sourceMappingURL=livraison.css.map */

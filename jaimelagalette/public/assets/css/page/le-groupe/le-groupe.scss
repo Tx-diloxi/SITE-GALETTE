@@ -1,0 +1,10 @@
+@use "../../_variables" as *;
+
+.vague-contact {
+    background: $livraison-bg;
+}
+
+.vague-animation {
+    transform: rotate(180deg);
+    background: $livraison-bg;
+}

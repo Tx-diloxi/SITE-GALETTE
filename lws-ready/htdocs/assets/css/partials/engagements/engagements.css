@@ -1,0 +1,53 @@
+#engagements {
+  background: #1E1E1E;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 70px;
+}
+#engagements .carte-engagement {
+  background-color: #111111;
+}
+#engagements .titre {
+  z-index: 1;
+}
+#engagements .cta-engagement {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#engagements button {
+  background-color: transparent;
+  border: 2px solid #EE7325;
+  color: #EE7325;
+}
+#engagements button:hover {
+  background-color: #B84800;
+  color: #F0F0F0;
+}
+#engagements > div:last-child {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+#engagements img.vague {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  #engagements {
+    min-height: 0;
+    gap: 40px;
+  }
+  #engagements div:last-child {
+    padding-bottom: 4em;
+  }
+}/*# sourceMappingURL=engagements.css.map */

@@ -1,0 +1,36 @@
+@use "../../_variables" as *;
+
+#valeurs {
+    background-color: $nuit;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 70px;
+
+    .mascotte {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        pointer-events: none;
+        max-height: 300px;
+    }
+
+    @media (max-width: 1024px) {
+        .mascotte {
+            max-height: 220px;
+        }
+
+        .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+        .mascotte {
+            display: none;
+        }
+
+        .grid-4 { grid-template-columns: 1fr; }
+    }
+}

@@ -1,0 +1,74 @@
+@use "../../_variables" as *;
+
+#legal.section {
+    min-height: auto;
+    height: auto;
+    gap: 0;
+    display: block;
+    background-color: $nuit;
+
+    .contenu {
+
+        h3 {
+            color: $orange-galette;
+            font-family: $h3-font;
+            font-size: $h3-pc-taille;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+
+            li {
+                margin-bottom: 0.5rem;
+                line-height: 1.6;
+            }
+        }
+
+        a {
+            color: $orange-galette;
+            text-decoration: underline;
+
+            &:hover {
+                color: $orange-brule;
+            }
+        }
+
+        strong {
+            color: $blanc-casse;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    #legal.section .contenu {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #legal.section .contenu {
+        max-width: 100%;
+
+        h3 {
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        p, ul {
+            text-align: center;
+        }
+
+        ul {
+            margin-left: 0;
+            list-style: none;
+        }
+    }
+}

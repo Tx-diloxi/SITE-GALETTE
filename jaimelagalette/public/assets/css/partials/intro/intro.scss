@@ -1,0 +1,101 @@
+@use "../../_variables" as *;
+
+// ── Section Intro ─────────────────────────────
+#intro {
+    .fil_ariane {
+        position: relative;
+        top: -10%;
+        font-family: $h2-font;
+        font-size: 1.2rem;
+        font-weight: 900;
+
+        a {
+            color: $orange-galette;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        span {
+            color: $blanc-casse;
+        }
+    }
+
+    .citation {
+        font-style: italic;
+        font-family: $h3-font;
+        font-size: 1.5rem;
+        margin-left: 2rem;
+        max-width: 60%;
+    }
+
+    .contenu {
+        font-family: $h2-font;
+        max-width: 70%;
+        margin-bottom: 2rem;
+    }
+
+    .intro_mascotte {
+        position: absolute;
+        right: 10%;
+        width: auto;
+        height: 500px;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    img.vague_intro {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: -1;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    #intro {
+        .citation {
+            max-width: 80%;
+            margin-left: 0;
+        }
+
+        .contenu {
+            max-width: 85%;
+        }
+
+        .intro_mascotte {
+            height: 380px;
+            right: 4%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    #intro {
+        .fil_ariane {
+            top: 0;
+            font-size: 1rem;
+        }
+
+        .citation {
+            max-width: 100%;
+            margin-left: 0;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .contenu {
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .intro_mascotte {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+@use "../../_variables" as *;
+
+.vague-formulaire {
+    background: $nuit;
+}
+
+.titre {
+    width: 70%;
+}
+
+#intro .intro_mascotte {
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    .titre {
+        width: 100%;
+    }
+}

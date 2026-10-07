@@ -1,0 +1,96 @@
+#contact {
+  background: linear-gradient(#B84800, #111111);
+  padding-top: 5rem;
+}
+#contact .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+}
+#contact .grid-2 .card {
+  width: 100%;
+  position: relative;
+  background-color: #141414;
+  border-radius: 15px;
+  padding: 50px 40px 50px 45%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+#contact .grid-2 .card img {
+  position: absolute;
+  left: -30px;
+  height: 125%;
+  width: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  z-index: 2;
+}
+#contact .grid-2 .card h3 {
+  font-size: 1.6rem;
+  color: #fff;
+  margin: 0;
+}
+#contact .grid-2 .card p {
+  color: #bbb;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+#contact .grid-2 .card a {
+  margin-top: 10px;
+}
+#contact .grid-2 .card:nth-child(even) {
+  padding: 50px 45% 50px 40px;
+}
+#contact .grid-2 .card:nth-child(even) img {
+  left: auto;
+  right: -25px;
+  height: 130%;
+}
+
+@media (max-width: 1024px) {
+  #contact .grid-2 {
+    gap: 40px;
+  }
+  #contact .grid-2 .card {
+    padding-left: 40%;
+  }
+  #contact .grid-2 .card:nth-child(even) {
+    padding-right: 40%;
+  }
+}
+@media (max-width: 768px) {
+  #contact .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 90px;
+  }
+  #contact .grid-2 .card {
+    padding: 30px;
+    padding-top: 220px;
+    text-align: center;
+    align-items: center;
+  }
+  #contact .grid-2 .card img {
+    left: 50%;
+    top: -50px;
+    bottom: auto;
+    transform: translateX(-50%);
+    height: 240px;
+    width: auto;
+  }
+  #contact .grid-2 .card:nth-child(even) {
+    padding: 30px;
+    padding-top: 220px;
+  }
+  #contact .grid-2 .card:nth-child(even) img {
+    left: 50%;
+    height: 240px;
+    right: auto;
+    top: -50px;
+    bottom: auto;
+    transform: translateX(-50%);
+  }
+}/*# sourceMappingURL=contact.css.map */
