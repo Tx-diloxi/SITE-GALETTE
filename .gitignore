@@ -1,5 +1,4 @@
 .env
-vendor/
 
 # CV candidats uploadés (données personnelles)
 **/uploads/cv/*.pdf
