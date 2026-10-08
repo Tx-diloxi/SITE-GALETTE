@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cln' => $cta_lien !== '' ? $cta_lien : null,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de savoirfaire_section
 
@@ -55,15 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image_label  = null;
 
             // Vérifie si une image de fond a été uploadée
-            if (!empty($_FILES['image_fond']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_fond']);
-                if ($uploaded) $image_fond = $uploaded;
-            }
+            $image_fond = admin_upload_or_keep('image_fond', $image_fond);
             // Vérifie si une image label a été uploadée
-            if (!empty($_FILES['image_label']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_label']);
-                if ($uploaded) $image_label = $uploaded;
-            }
+            $image_label = admin_upload_or_keep('image_label', $image_label);
 
             // Insère la nouvelle carte en base
             $stmt = $pdo->prepare("INSERT INTO card_SavoirFaire (partial_savoirfaire_id, sous_titre, titre, contenu, image_fond, alt_fond, image_label, alt_label, ordre) VALUES (1, :st, :t, :c, :if, :af, :il, :al, :o)");
@@ -78,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o'  => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de savoirfaire_add
 
@@ -96,15 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image_label  = $_POST['image_label_current'] ?? null;
 
             // Vérifie si une nouvelle image de fond a été uploadée
-            if (!empty($_FILES['image_fond']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_fond']);
-                if ($uploaded) $image_fond = $uploaded;
-            }
+            $image_fond = admin_upload_or_keep('image_fond', $image_fond);
             // Vérifie si une nouvelle image label a été uploadée
-            if (!empty($_FILES['image_label']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_label']);
-                if ($uploaded) $image_label = $uploaded;
-            }
+            $image_label = admin_upload_or_keep('image_label', $image_label);
 
             // Met à jour la carte ciblée par son ID
             $stmt = $pdo->prepare("UPDATE card_SavoirFaire SET sous_titre = :st, titre = :t, contenu = :c, image_fond = :if, alt_fond = :af, image_label = :il, alt_label = :al, ordre = :o WHERE id = :cid AND partial_savoirfaire_id = 1");
@@ -120,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de savoirfaire_edit
 
@@ -131,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM card_SavoirFaire WHERE id = :id AND partial_savoirfaire_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de savoirfaire_delete
     }

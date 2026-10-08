@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             ]);
 
             // Redirige vers la page d'édition avec un indicateur de succès
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Ajout d'une nouvelle carte animation ---
@@ -49,10 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image = null;
 
             // Vérifie si un fichier image a été téléchargé
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Insère la nouvelle carte en base de données
             $stmt = $pdo->prepare("INSERT INTO card_Animation (partial_animation_id, nom, image, alt) VALUES (1, :n, :i, :a)");
@@ -62,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':a' => $alt,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Modification d'une carte animation existante ---
@@ -74,10 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image  = $_POST['image_current'] ?? null;
 
             // Vérifie si une nouvelle image a été téléchargée
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Met à jour la carte existante
             $stmt = $pdo->prepare("UPDATE card_Animation SET nom = :n, image = :i, alt = :a WHERE id = :cid AND partial_animation_id = 1");
@@ -88,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Suppression d'une carte animation ---
@@ -98,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM card_Animation WHERE id = :id AND partial_animation_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
     }
 }

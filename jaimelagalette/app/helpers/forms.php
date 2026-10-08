@@ -266,7 +266,7 @@ function handleApplicationForm(PDO $pdo): array
         }
 
         if (empty($errors['cv'])) {
-            $uploadDir = APP_ROOT . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
+            $uploadDir = WEB_ROOT . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
 
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
@@ -319,7 +319,7 @@ function handleApplicationForm(PDO $pdo): array
         error_log('Application form insert error: ' . $e->getMessage());
         // Nettoie le fichier uploadé en cas d'erreur
         if ($cvPath !== null) {
-            $uploadDir = APP_ROOT . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
+            $uploadDir = WEB_ROOT . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
             @unlink($uploadDir . $cvPath);
         }
         return ['success' => false, 'errors' => ['global' => 'Erreur lors de l\'envoi. Veuillez réessayer.']];
@@ -384,7 +384,7 @@ function handleApplicationForm(PDO $pdo): array
     // Chemin complet du CV pour pièce jointe
     $cvFullPath = '';
     if ($cvPath !== null) {
-        $uploadDir = APP_ROOT . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
+        $uploadDir = WEB_ROOT . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cv' . DIRECTORY_SEPARATOR;
         $cvFullPath = $uploadDir . $cvPath;
     }
 

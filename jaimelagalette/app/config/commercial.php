@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 // ── Configuration de l'espace commercial ──────────
 
-// Définit les chemins racines si pas déjà définis
-if (!defined('APP_ROOT')) {
-    define('APP_ROOT', dirname(__DIR__, 2) . DIRECTORY_SEPARATOR);
-}
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '/');
-}
+// Chemins racines (APP_ROOT, BASE_URL, WEB_ROOT)
+require_once __DIR__ . '/paths.php';
 
 // Nom de session pour les commerciaux (partagé avec le nom admin)
 define('COMMERCIAL_SESSION_NAME', 'jalg_admin');
 // Durée de vie de la session commercial (2 heures)
 define('COMMERCIAL_SESSION_LIFETIME', 7200);
 // Répertoire de destination pour les photos d'inspection
-define('INSPECTION_UPLOAD_DIR', APP_ROOT . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'inspections' . DIRECTORY_SEPARATOR);
+define('INSPECTION_UPLOAD_DIR', WEB_ROOT . 'assets' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'inspections' . DIRECTORY_SEPARATOR);
 // URL de base pour accéder aux photos d'inspection
 define('INSPECTION_UPLOAD_URL', BASE_URL . 'assets/uploads/inspections/');
 // Taille maximale des fichiers uploadés (5 Mo)
@@ -130,42 +125,4 @@ function commercial_upload_photos(array $files, int $inspectionId, PDO $pdo): vo
     if ($uploaded === 0 && $count > 0) {
         throw new RuntimeException("Aucune photo n'a pu être enregistrée. Vérifiez le format et la taille (max 5Mo, JPEG/PNG/WebP).");
     }
-}
-
-// Upload d'une seule photo pour une inspection donnée (retourne l'URL ou null)
-function commercial_upload_photo(array $file, int $inspectionId): ?string {
-    $allowed_mimes = ['image/jpeg', 'image/png', 'image/webp'];
-    if ($file['error'] !== UPLOAD_ERR_OK) return null;
-    if ($file['size'] > MAX_UPLOAD_SIZE) return null;
-
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $mime = finfo_file($finfo, $file['tmp_name']);
-    finfo_close($finfo);
-
-    if (!in_array($mime, $allowed_mimes, true)) return null;
-
-    $ext = match ($mime) {
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/webp' => 'webp',
-        default => null,
-    };
-    if (!$ext) return null;
-
-    $dir = rtrim(INSPECTION_UPLOAD_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $inspectionId;
-    if (!is_dir($dir)) {
-        @mkdir($dir, 0777, true);
-    }
-    if (!is_dir($dir) || !is_writable($dir)) {
-        return null;
-    }
-
-    $filename = 'photo_' . uniqid() . '.' . $ext;
-    $dest = $dir . DIRECTORY_SEPARATOR . $filename;
-    if (!move_uploaded_file($file['tmp_name'], $dest)) {
-        return null;
-    }
-
-    chmod($dest, 0644);
-    return rtrim(INSPECTION_UPLOAD_URL, '/') . '/' . $inspectionId . '/' . $filename;
 }

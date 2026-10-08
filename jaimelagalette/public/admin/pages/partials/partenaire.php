@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             ]);
 
             // Redirige vers la page d'édition avec un indicateur de succès
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Ajout d'un nouveau partenaire ---
@@ -48,10 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $ordre = (int) ($_POST['ordre'] ?? 0);
 
             // Vérifie si un fichier logo a été téléchargé
-            if (!empty($_FILES['logo']['name'])) {
-                $uploaded = admin_upload_image($_FILES['logo']);
-                if ($uploaded) $logo = $uploaded;
-            }
+            $logo = admin_upload_or_keep('logo', $logo);
 
             // Insère le nouveau partenaire en base de données
             $stmt = $pdo->prepare("INSERT INTO partenaire (partial_partenaire_id, logo, alt, lien, ordre) VALUES (1, :l, :a, :li, :o)");
@@ -62,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o'  => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Modification d'un partenaire existant ---
@@ -75,10 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $logo   = $_POST['logo_current'] ?? null;
 
             // Vérifie si un nouveau logo a été téléchargé
-            if (!empty($_FILES['logo']['name'])) {
-                $uploaded = admin_upload_image($_FILES['logo']);
-                if ($uploaded) $logo = $uploaded;
-            }
+            $logo = admin_upload_or_keep('logo', $logo);
 
             // Met à jour le partenaire existant
             $stmt = $pdo->prepare("UPDATE partenaire SET logo = :l, alt = :a, lien = :li, ordre = :o WHERE id = :cid AND partial_partenaire_id = 1");
@@ -90,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Suppression d'un partenaire ---
@@ -100,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM partenaire WHERE id = :id AND partial_partenaire_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
     }
 }

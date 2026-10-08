@@ -11,7 +11,7 @@ $livreur->execute([':id' => $id]);
 $livreur = $livreur->fetch();
 
 if (!$livreur) {
-    admin_redirect('livreurs/index.php');
+    admin_redirect('admin/livreurs/index.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Token invalide.';
     } else {
         $pdo->prepare("DELETE FROM livreur WHERE id = :id")->execute([':id' => $id]);
-        admin_redirect('livreurs/index.php');
+        admin_redirect('admin/livreurs/index.php');
     }
 }
 

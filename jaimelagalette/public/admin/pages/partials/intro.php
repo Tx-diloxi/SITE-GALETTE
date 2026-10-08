@@ -39,15 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $image_mascotte = $section['image_mascotte'] ?? null;
 
         // Vérifie si une nouvelle image de fond a été uploadée
-        if (!empty($_FILES['image_fond']['name'])) {
-            $uploaded = admin_upload_image($_FILES['image_fond']);
-            if ($uploaded) $image_fond = $uploaded;
-        }
+        $image_fond = admin_upload_or_keep('image_fond', $image_fond);
         // Vérifie si une nouvelle image mascotte a été uploadée
-        if (!empty($_FILES['image_mascotte']['name'])) {
-            $uploaded = admin_upload_image($_FILES['image_mascotte']);
-            if ($uploaded) $image_mascotte = $uploaded;
-        }
+        $image_mascotte = admin_upload_or_keep('image_mascotte', $image_mascotte);
 
         // Vérifie si l'enregistrement existe déjà (update) ou non (insert)
         if ($id > 0) {
@@ -82,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         // Fin de la condition update/insert
 
         // Redirige vers la page d'édition avec un indicateur de succès
-        admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+        admin_redirect_page_saved();
     }
     // Fin de la validation du token CSRF
 }

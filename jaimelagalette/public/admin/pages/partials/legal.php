@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o'   => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         if ($_POST['action'] === 'legal_section_edit') {
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':pid' => $legal_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         if ($_POST['action'] === 'legal_section_delete') {
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM legal_Section WHERE id = :id AND partial_legal_id = :pid");
             $stmt->execute([':id' => $section_id, ':pid' => $legal_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
     }
 }

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':t'  => $titre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de processus_section
 
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o' => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de processus_add
 
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de processus_edit
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM etape_Processus WHERE id = :id AND partial_processus_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de processus_delete
     }

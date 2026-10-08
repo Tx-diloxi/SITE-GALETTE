@@ -43,9 +43,6 @@ cp "$SOURCE/config.php" "$DEST/config.php" 2>/dev/null || true
 cp "$SOURCE/composer.json" "$DEST/composer.json" 2>/dev/null || true
 cp "$SOURCE/composer.lock" "$DEST/composer.lock" 2>/dev/null || true
 
-echo "5. Correction du chemin 'public/' → 'htdocs/' dans app/config/admin.php..."
-sed -i "s|APP_ROOT \. 'public'|APP_ROOT . 'htdocs'|g" "$DEST/app/config/admin.php"
-
 echo "6. Création du fichier config.php LWS..."
 cat > "$DEST/config.php" << 'CONFIGEOF'
 <?php

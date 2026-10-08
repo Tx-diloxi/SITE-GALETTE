@@ -18,7 +18,7 @@ admin_check_auth();
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
-    admin_redirect('index.php');
+    admin_redirect('admin/candidatures/index.php');
 }
 
 // -----------------------------------------------
@@ -35,7 +35,7 @@ $stmt->execute([$id]);
 $c = $stmt->fetch();
 
 if (!$c) {
-    admin_redirect('index.php');
+    admin_redirect('admin/candidatures/index.php');
 }
 
 // -----------------------------------------------

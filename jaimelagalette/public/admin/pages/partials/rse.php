@@ -34,10 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = null;
 
             // Vérifie si une image a été uploadée
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Insère la nouvelle action RSE en base
             $stmt = $pdo->prepare("INSERT INTO action_RSE (image, alt, titre, description, contenu, tags, ordre) VALUES (:i, :a, :t, :d, :c, :tg, :o)");
@@ -51,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o'  => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de rse_add
 
@@ -68,10 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = $_POST['image_current'] ?? null;
 
             // Vérifie si une nouvelle image a été uploadée
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Met à jour l'action RSE ciblée par son ID
             $stmt = $pdo->prepare("UPDATE action_RSE SET image = :i, alt = :a, titre = :t, description = :d, contenu = :c, tags = :tg, ordre = :o WHERE id = :cid");
@@ -86,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de rse_edit
 
@@ -97,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM action_RSE WHERE id = :id");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de rse_delete
     }

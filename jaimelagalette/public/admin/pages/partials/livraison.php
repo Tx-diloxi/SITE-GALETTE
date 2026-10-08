@@ -32,10 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $image_fond = $section['image_fond'] ?? null;
 
         // Vérifie si une nouvelle image de fond a été téléchargée
-        if (!empty($_FILES['image_fond']['name'])) {
-            $uploaded = admin_upload_image($_FILES['image_fond']);
-            if ($uploaded) $image_fond = $uploaded;
-        }
+        $image_fond = admin_upload_or_keep('image_fond', $image_fond);
 
         // Met à jour tous les champs de la section livraison (id = 1)
         $stmt = $pdo->prepare("UPDATE partial_Livraison SET sous_titre = :st, titre = :t, contenu = :c, cta_label = :cl, cta_lien = :cln, image_fond = :if, alt_fond = :af WHERE id = 1");
@@ -50,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         // Redirige vers la page d'édition avec un indicateur de succès
-        admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+        admin_redirect_page_saved();
     }
 }
 // Fin du traitement du formulaire

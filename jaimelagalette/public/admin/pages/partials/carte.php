@@ -33,10 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image_mascotte = $section['image_mascotte'] ?? null;
 
             // Vérifie si une nouvelle image mascotte a été uploadée
-            if (!empty($_FILES['image_mascotte']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_mascotte']);
-                if ($uploaded) $image_mascotte = $uploaded;
-            }
+            $image_mascotte = admin_upload_or_keep('image_mascotte', $image_mascotte);
 
             // Met à jour les données de la section carte en base
             $stmt = $pdo->prepare("UPDATE partial_Carte SET sous_titre = :st, titre = :t, image_mascotte = :im, alt_mascotte = :am WHERE id = 1");
@@ -47,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':am' => $alt_mascotte,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de carte_section
 
@@ -67,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':pid' => $point_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de carte_point_save
     }

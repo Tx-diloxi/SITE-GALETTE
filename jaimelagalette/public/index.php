@@ -38,6 +38,10 @@ $routes = [
 $page = null;
 if (strpos($url, 'atelier/') === 0) {
     $page = 'pages/atelier/index.php';
+} elseif (preg_match('#^produit/(\d+)(?:/|$)#', $url, $m)) {
+    // Route dynamique pour les produits : /produit/{id}/{slug}
+    $_GET['produit_id'] = $m[1];
+    $page = 'pages/produit/index.php';
 } else {
     $page = $routes[$url] ?? null;
 }

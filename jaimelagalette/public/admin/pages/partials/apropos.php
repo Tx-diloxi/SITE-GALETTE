@@ -35,10 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $image      = $section['image'] ?? null;
 
         // Vérifie si une nouvelle image a été téléchargée
-        if (!empty($_FILES['image']['name'])) {
-            $uploaded = admin_upload_image($_FILES['image']);
-            if ($uploaded) $image = $uploaded;
-        }
+        $image = admin_upload_or_keep('image', $image);
 
         // Met à jour tous les champs de la section "à propos"
         $stmt = $pdo->prepare("UPDATE partial_Apropos SET sous_titre = :st, titre = :t, contenu = :c, cta_label = :cl, cta_lien = :cln, image = :i, alt = :a WHERE id = :id");
@@ -54,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         // Redirige vers la page d'édition avec un indicateur de succès
-        admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+        admin_redirect_page_saved();
     }
 }
 // Fin du traitement du formulaire

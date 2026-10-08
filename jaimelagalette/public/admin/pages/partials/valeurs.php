@@ -31,10 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image_fond = $section['image_fond'] ?? null;
 
             // Vérifie si une nouvelle image de fond a été téléchargée
-            if (!empty($_FILES['image_fond']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image_fond']);
-                if ($uploaded) $image_fond = $uploaded;
-            }
+            $image_fond = admin_upload_or_keep('image_fond', $image_fond);
 
             // Met à jour les champs de la section valeurs (id = 1)
             $stmt = $pdo->prepare("UPDATE partial_Valeur SET sous_titre = :st, titre = :t, image_fond = :if, alt_fond = :af WHERE id = 1");
@@ -46,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             ]);
 
             // Redirige vers la page d'édition avec un indicateur de succès
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Ajout d'une nouvelle carte valeur ---
@@ -58,10 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = null;
 
             // Vérifie si un fichier image a été téléchargé
-            if (!empty($_FILES['card_image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['card_image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('card_image', $image);
 
             // Insère la nouvelle carte en base de données
             $stmt = $pdo->prepare("INSERT INTO card_Valeur (partial_valeur_id, image, alt, titre, description) VALUES (1, :i, :a, :t, :d)");
@@ -72,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':d' => $description,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Modification d'une carte valeur existante ---
@@ -85,10 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = $_POST['card_image_current'] ?? null;
 
             // Vérifie si une nouvelle image a été téléchargée
-            if (!empty($_FILES['card_image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['card_image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('card_image', $image);
 
             // Met à jour la carte existante
             $stmt = $pdo->prepare("UPDATE card_Valeur SET image = :i, alt = :a, titre = :t, description = :d WHERE id = :cid AND partial_valeur_id = 1");
@@ -100,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Suppression d'une carte valeur ---
@@ -110,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM card_Valeur WHERE id = :id AND partial_valeur_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
     }
 }

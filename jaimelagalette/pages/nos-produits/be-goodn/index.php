@@ -132,6 +132,3 @@ include PARTIALS . 'header.php';
 include PARTIALS . 'footer.php';
 include PARTIALS . 'chatbot-widget.php';
 ?>
-
-<!-- Script spécifique aux pages produit -->
-<script src="<?= BASE_URL ?>assets/js/produit.js" defer></script>

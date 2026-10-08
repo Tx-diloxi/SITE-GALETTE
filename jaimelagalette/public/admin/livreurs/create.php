@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':telephone' => $telephone ?: null,
                 ':en_ligne' => $en_ligne ? 1 : 0,
             ]);
-            admin_redirect('livreurs/index.php');
+            admin_redirect('admin/livreurs/index.php');
         }
     }
 }

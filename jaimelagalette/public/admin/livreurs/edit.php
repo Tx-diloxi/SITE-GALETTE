@@ -11,7 +11,7 @@ $livreur->execute([':id' => $id]);
 $livreur = $livreur->fetch();
 
 if (!$livreur) {
-    admin_redirect('livreurs/index.php');
+    admin_redirect('admin/livreurs/index.php');
 }
 
 $error = '';
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $stmt = $pdo->prepare("UPDATE livreur SET nom=:nom, prenom=:prenom, secteur=:secteur, telephone=:telephone, en_ligne=:en_ligne WHERE id=:id");
             $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':secteur' => $secteur ?: null, ':telephone' => $telephone ?: null, ':en_ligne' => $en_ligne ? 1 : 0, ':id' => $id]);
-            admin_redirect('livreurs/index.php');
+            admin_redirect('admin/livreurs/index.php');
         }
     }
 }

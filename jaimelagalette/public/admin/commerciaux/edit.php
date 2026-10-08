@@ -11,7 +11,7 @@ $commercial->execute([':id' => $id]);
 $commercial = $commercial->fetch();
 
 if (!$commercial) {
-    admin_redirect('commerciaux/index.php');
+    admin_redirect('admin/commerciaux/index.php');
 }
 
 $error = '';
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmt = $pdo->prepare("UPDATE commercial SET nom=:nom, prenom=:prenom, email=:email, login=:login, telephone=:telephone, en_ligne=:en_ligne WHERE id=:id");
                     $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':login' => $login, ':telephone' => $telephone ?: null, ':en_ligne' => $en_ligne ? 1 : 0, ':id' => $id]);
                 }
-                admin_redirect('commerciaux/index.php');
+                admin_redirect('admin/commerciaux/index.php');
             }
         }
     }

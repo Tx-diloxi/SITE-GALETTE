@@ -15,7 +15,7 @@ admin_check_auth(); // Vérifie que l'utilisateur est connecté en tant qu'admin
 // ---- Vérification de la méthode de requête ----
 // Vérifie que la requête est bien de type POST (pas d'accès direct en GET)
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    admin_redirect('questions.php'); // Redirige si accès direct
+    admin_redirect('admin/faq/questions.php'); // Redirige si accès direct
 }
 
 // --- Récupération des paramètres POST ---
@@ -24,7 +24,7 @@ $token = $_POST['csrf_token'] ?? '';  // Token CSRF de sécurité
 
 // Vérifie que l'ID est valide et que le token CSRF est correct
 if ($id <= 0 || !admin_csrf_verify($token)) {
-    admin_redirect('questions.php');
+    admin_redirect('admin/faq/questions.php');
 }
 
 // --- Récupération de l'état actuel de la question ---

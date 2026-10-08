@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         // Redirige vers la page d'édition avec un indicateur de succès
-        admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+        admin_redirect_page_saved();
     }
     // Fin de la validation du token CSRF
 }

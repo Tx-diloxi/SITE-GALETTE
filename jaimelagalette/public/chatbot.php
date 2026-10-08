@@ -57,7 +57,7 @@ function normalizeText(string $text): string {
 function tokenize(string $text): array {
     // Liste des mots courants français sans intérêt pour la recherche
     $stopwords = ['de', 'la', 'le', 'les', 'des', 'du', 'et', 'un', 'une', 'dans', 'pour', 'sur',
-                  'est', 'pas', 'que', 'qui', 'quoi', 'comment', 'ou', 'ou', 'en', 'au', 'aux',
+                  'est', 'pas', 'que', 'qui', 'quoi', 'comment', 'ou', 'en', 'au', 'aux',
                   'avec', 'ce', 'cest', 'ces', 'ses', 'son', 'sa', 'mes', 'tes', 'nos', 'vos',
                   'a', 'as', 'il', 'elle', 'on', 'nous', 'vous', 'ils', 'elles', 'par', 'plus',
                   'ne', 'ni', 'mais', 'car', 'donc', 'si', 'tout', 'tous', 'tres', 'bien', 'fait',
@@ -193,23 +193,8 @@ function findBestFaqAnswer(PDO $pdo, string $messageRaw, ?string $profil): ?arra
         'question' => $bestMatch['question'],
         'reponse' => $bestMatch['reponse'],
         'categorie' => $bestMatch['categorie_titre'],
-        'score' => round($bestScore, 2),
         'faq_url' => '/faq#' . $bestMatch['id'],
-        'categorie_url' => '/faq#categorie-' . slugify($bestMatch['categorie_titre']),
     ];
-}
-
-// Convertit un texte en slug URL (ex: "Nos produits" -> "nos-produits")
-function slugify(string $text): string {
-    $text = mb_strtolower($text, 'UTF-8');
-    $text = str_replace(
-        ['é', 'è', 'ê', 'ë', 'à', 'â', 'ä', 'ù', 'û', 'ü', 'ô', 'ö', 'î', 'ï', 'ç'],
-        ['e', 'e', 'e', 'e', 'a', 'a', 'a', 'u', 'u', 'u', 'o', 'o', 'i', 'i', 'c'],
-        $text
-    );
-    $text = preg_replace('/[^a-z0-9\s-]/', '', $text);
-    $text = preg_replace('/[\s_]+/', '-', $text);
-    return trim($text, '-');
 }
 
 // Enregistre la question posée dans les logs pour analyse ultérieure

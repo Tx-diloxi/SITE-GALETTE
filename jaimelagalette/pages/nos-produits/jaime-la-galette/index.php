@@ -32,12 +32,6 @@ $produitsData = [];
 foreach ($listeProduits as $produit) {
     $produitId = $produit['id'];
 
-    $stmtTitre = $pdo->prepare("SELECT titre, sous_titre FROM produit WHERE id = ?");
-    $stmtTitre->execute([$produitId]);
-    $ligne = $stmtTitre->fetch();
-    $titre = $ligne['titre'] ?? '';
-    $sousTitre = $ligne['sous_titre'] ?? '';
-    
     // Récupération des données "À propos" pour ce produit
     $stmtApropos = $pdo->prepare("SELECT * FROM produit_Apropos WHERE produit_id = ? LIMIT 1");
     $stmtApropos->execute([$produitId]);

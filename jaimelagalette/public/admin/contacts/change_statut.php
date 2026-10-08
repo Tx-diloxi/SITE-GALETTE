@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         echo json_encode(['success' => false, 'error' => 'Method not allowed']);
         exit;
     }
-    admin_redirect('index.php');
+    admin_redirect('admin/contacts/index.php');
 }
 
 // -----------------------------------------------
@@ -43,7 +43,7 @@ if ($id <= 0 || !in_array($statut, ['nouveau', 'lu', 'traite', 'archive'], true)
         echo json_encode(['success' => false, 'error' => 'Invalid request']);
         exit;
     }
-    admin_redirect('index.php');
+    admin_redirect('admin/contacts/index.php');
 }
 
 // -----------------------------------------------

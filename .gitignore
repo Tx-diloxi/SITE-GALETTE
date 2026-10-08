@@ -1,3 +1,5 @@
 .env
 vendor/
-docker/sql/02_seeds.sql
+
+# CV candidats uploadés (données personnelles)
+**/uploads/cv/*.pdf

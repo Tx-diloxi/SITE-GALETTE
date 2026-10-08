@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':t'  => $titre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de recrutement_section
 
@@ -48,10 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = null;
 
             // Vérifie si une image a été uploadée
-            if (!empty($_FILES['card_image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['card_image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('card_image', $image);
 
             // Insère la nouvelle carte en base
             $stmt = $pdo->prepare("INSERT INTO card_Recrutement (partial_recrutement_id, image, alt, titre, description, ordre) VALUES (1, :i, :a, :t, :d, :o)");
@@ -63,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o' => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de recrutement_add
 
@@ -78,10 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = $_POST['card_image_current'] ?? null;
 
             // Vérifie si une nouvelle image a été uploadée
-            if (!empty($_FILES['card_image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['card_image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('card_image', $image);
 
             // Met à jour la carte ciblée par son ID
             $stmt = $pdo->prepare("UPDATE card_Recrutement SET image = :i, alt = :a, titre = :t, description = :d, ordre = :o WHERE id = :cid AND partial_recrutement_id = 1");
@@ -94,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de recrutement_edit
 
@@ -105,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM card_Recrutement WHERE id = :id AND partial_recrutement_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
         // Fin de recrutement_delete
     }

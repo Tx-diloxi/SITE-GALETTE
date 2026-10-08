@@ -24,12 +24,12 @@ $categories = $stmtCategories->fetchAll();
 // Questions pour chaque catégorie
 $questionsParCategorie = [];
 
+$stmtQuestions = $pdo->prepare("
+    SELECT * FROM question_FAQ 
+    WHERE categorie_faq_id = ? AND en_ligne = TRUE 
+    ORDER BY ordre ASC
+");
 foreach ($categories as $categorie) {
-    $stmtQuestions = $pdo->prepare("
-        SELECT * FROM question_FAQ 
-        WHERE categorie_faq_id = ? AND en_ligne = TRUE 
-        ORDER BY ordre ASC
-    ");
     $stmtQuestions->execute([$categorie['id']]);
     $questionsParCategorie[$categorie['id']] = $stmtQuestions->fetchAll();
 }

@@ -17,6 +17,9 @@ RUN apt-get update && apt-get install -y \
     intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Composer (dépendances PHP : PHPMailer)
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
 # Activer mod_rewrite pour les .htaccess (URL propres)
 RUN a2enmod rewrite
 

@@ -13,8 +13,7 @@ if (!$chiffresGroupeStyleLoaded): $chiffresGroupeStyleLoaded = true;
 if ($chiffres):
     // Requêtes dynamiques pour les vraies données depuis la table point_Carte
     try {
-        $totalSites = (int) $pdo->query("SELECT COUNT(*) FROM point_Carte")->fetchColumn();
-        $totalRegions = (int) $pdo->query("SELECT COUNT(DISTINCT departement) FROM point_Carte")->fetchColumn();
+        [$totalSites, $totalRegions] = array_map('intval', $pdo->query("SELECT COUNT(*), COUNT(DISTINCT departement) FROM point_Carte")->fetch(PDO::FETCH_NUM));
     } catch (Exception $e) {
         $totalSites = 0;
         $totalRegions = 0;

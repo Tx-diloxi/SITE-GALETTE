@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 // ── Administration du site ────────────────────────
 
-// Définit le chemin racine du projet si pas déjà défini
-if (!defined('APP_ROOT')) {
-    define('APP_ROOT', dirname(__DIR__, 2) . DIRECTORY_SEPARATOR);
-}
-// Définit l'URL de base du site si pas déjà défini
-if (!defined('BASE_URL')) {
-    define('BASE_URL', '/');
-}
+// Chemins racines (APP_ROOT, BASE_URL, WEB_ROOT)
+require_once __DIR__ . '/paths.php';
 
 // Identifiant administrateur depuis l'environnement ou valeur par défaut (dev local)
 define('ADMIN_USER', getenv('ADMIN_USER') ?: 'la-galette-admin');
@@ -22,7 +16,7 @@ define('ADMIN_SESSION_NAME', 'jalg_admin');
 // Durée de vie de la session admin (2 heures en secondes)
 define('ADMIN_SESSION_LIFETIME', 7200);
 // Répertoire de destination pour les uploads d'images admin
-define('ADMIN_UPLOAD_DIR', APP_ROOT . 'public' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin-uploads' . DIRECTORY_SEPARATOR);
+define('ADMIN_UPLOAD_DIR', WEB_ROOT . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'admin-uploads' . DIRECTORY_SEPARATOR);
 // URL de base pour accéder aux fichiers uploadés
 define('ADMIN_UPLOAD_URL', BASE_URL . 'assets/images/admin-uploads/');
 // Taille maximale des fichiers uploadés (5 Mo)
@@ -122,6 +116,19 @@ function admin_upload_image(array $file): ?string {
     return ADMIN_UPLOAD_URL . $filename;
 }
 
+// Retourne l'URL de la nouvelle image uploadée dans $_FILES[$field], ou $current si aucun upload valide
+function admin_upload_or_keep(string $field, $current = null) {
+    if (empty($_FILES[$field]['name'])) {
+        return $current;
+    }
+    return admin_upload_image($_FILES[$field]) ?: $current;
+}
+
+// Redirige vers l'éditeur de la page admin courante avec le message "enregistré"
+function admin_redirect_page_saved(): void {
+    admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+}
+
 // Redirige l'utilisateur vers un chemin de l'interface admin
 function admin_redirect(string $path): void {
     // Vide le buffer de sortie si actif
@@ -161,24 +168,6 @@ function auth_start_session(): void {
         ]);
         session_start();
     }
-}
-
-// Vérifie que l'utilisateur a un rôle spécifique et redirige si nécessaire
-function auth_check(string $role): void {
-    auth_start_session();
-    if (empty($_SESSION['auth_logged_in'])) {
-        header('Location: ' . BASE_URL . 'admin/login.php');
-        exit;
-    }
-    if ($_SESSION['auth_role'] !== $role) {
-        if ($_SESSION['auth_role'] === 'admin') {
-            header('Location: ' . BASE_URL . 'admin/index.php');
-        } else {
-            header('Location: ' . BASE_URL . 'admin/commercial/visite-mystere/index.php');
-        }
-        exit;
-    }
-    auth_check_timeout();
 }
 
 // Vérifie si l'utilisateur connecté est un administrateur

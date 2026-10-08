@@ -11,7 +11,7 @@ $commercial->execute([':id' => $id]);
 $commercial = $commercial->fetch();
 
 if (!$commercial) {
-    admin_redirect('commerciaux/index.php');
+    admin_redirect('admin/commerciaux/index.php');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Token invalide.';
     } else {
         $pdo->prepare("DELETE FROM commercial WHERE id = :id")->execute([':id' => $id]);
-        admin_redirect('commerciaux/index.php');
+        admin_redirect('admin/commerciaux/index.php');
     }
 }
 

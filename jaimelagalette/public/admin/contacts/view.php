@@ -18,7 +18,7 @@ admin_check_auth();
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
-    admin_redirect('index.php');
+    admin_redirect('admin/contacts/index.php');
 }
 
 // -----------------------------------------------
@@ -30,7 +30,7 @@ $stmt->execute([$id]);
 $m = $stmt->fetch();
 
 if (!$m) {
-    admin_redirect('index.php');
+    admin_redirect('admin/contacts/index.php');
 }
 
 // -----------------------------------------------

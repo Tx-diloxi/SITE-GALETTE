@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             ]);
 
             // Redirige vers la page d'édition avec un indicateur de succès
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Ajout d'une nouvelle étape historique ---
@@ -55,10 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = null;
 
             // Vérifie si un fichier image a été téléchargé
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Insère la nouvelle étape en base de données
             $stmt = $pdo->prepare("INSERT INTO etape_Histoire (partial_histoire_id, annee, nom, region, description, image, alt, ordre) VALUES (1, :a, :n, :r, :d, :i, :alt, :o)");
@@ -72,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':o'   => $ordre,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Modification d'une étape existante ---
@@ -88,10 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $image       = $_POST['image_current'] ?? null;
 
             // Vérifie si une nouvelle image a été téléchargée
-            if (!empty($_FILES['image']['name'])) {
-                $uploaded = admin_upload_image($_FILES['image']);
-                if ($uploaded) $image = $uploaded;
-            }
+            $image = admin_upload_or_keep('image', $image);
 
             // Met à jour l'étape existante
             $stmt = $pdo->prepare("UPDATE etape_Histoire SET annee = :a, nom = :n, region = :r, description = :d, image = :i, alt = :alt, ordre = :o WHERE id = :cid AND partial_histoire_id = 1");
@@ -106,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 ':cid' => $card_id,
             ]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
 
         // --- Suppression d'une étape historique ---
@@ -116,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $stmt = $pdo->prepare("DELETE FROM etape_Histoire WHERE id = :id AND partial_histoire_id = 1");
             $stmt->execute([':id' => $card_id]);
 
-            admin_redirect('admin/pages/edit.php?page=' . rawurlencode($_GET['page'] ?? 'home') . '&saved=1');
+            admin_redirect_page_saved();
         }
     }
 }

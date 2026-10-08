@@ -1,7 +1,8 @@
+import os
 from pptx import Presentation
-from pptx.util import Inches, Pt, Emu
+from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
-from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+from pptx.enum.text import PP_ALIGN
 from pptx.enum.shapes import MSO_SHAPE
 
 prs = Presentation()
@@ -767,7 +768,7 @@ p3.space_before = Pt(12)
 # ============================================================
 # SAUVEGARDE
 # ============================================================
-output_path = "/home/etudiant/opencode/SITE GALETTE/Soutenance_Stage_LE_SECH_Marceau.pptx"
+output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Soutenance_Stage_LE_SECH_Marceau.pptx")
 prs.save(output_path)
 print(f"✅ Présentation générée : {output_path}")
 print(f"📊 {len(prs.slides)} slides créées")

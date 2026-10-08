@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':telephone' => $telephone ?: null,
                     ':en_ligne' => $en_ligne ? 1 : 0,
                 ]);
-                admin_redirect('commerciaux/index.php');
+                admin_redirect('admin/commerciaux/index.php');
             }
         }
     }

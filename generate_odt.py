@@ -1,3 +1,4 @@
+import os
 from odf.opendocument import OpenDocumentText
 from odf.style import Style, ParagraphProperties, TextProperties, TableCellProperties
 from odf.text import P
@@ -588,7 +589,7 @@ def create_doc():
     add_para("  \u2022 Donn\u00e9es de d\u00e9mo : docker/sql/02_seeds.sql")
     add_para("  \u2022 Variables d'environnement : DB_HOST, DB_NAME, DB_USER, DB_PASS, MAIL_USERNAME, MAIL_PASSWORD, ADMIN_USER, ADMIN_PASS_HASH")
 
-    doc.save("/home/etudiant/opencode/SITE GALETTE/DOCUMENTATION-UTILISATION.odt")
+    doc.save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "DOCUMENTATION-UTILISATION.odt"))
     print("Fichier ODT cr\u00e9\u00e9 avec succ\u00e8s !")
 
 create_doc()

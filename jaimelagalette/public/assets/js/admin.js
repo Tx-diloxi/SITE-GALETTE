@@ -1,13 +1,6 @@
 (function() {
   'use strict';
 
-  function refreshPreview() {
-    var iframe = document.getElementById('page-preview');
-    if (iframe) {
-      iframe.src = iframe.src;
-    }
-  }
-
   function toSlug(str) {
     return str.toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -97,43 +90,4 @@
       }
     });
   });
-
-  var addIngredientBtns = document.querySelectorAll('.admin-add-row');
-  addIngredientBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var container = this.closest('.admin-rows-container');
-      if (!container) return;
-      var template = container.querySelector('.admin-row-template');
-      if (!template) return;
-      var clone = template.cloneNode(true);
-      clone.classList.remove('admin-row-template');
-      clone.style.display = '';
-      var inputs = clone.querySelectorAll('input, textarea, select');
-      var index = container.querySelectorAll('.admin-row:not(.admin-row-template)').length;
-      inputs.forEach(function(input) {
-        var name = input.getAttribute('data-name');
-        if (name) {
-          input.name = name.replace('__INDEX__', String(index));
-          input.value = '';
-          input.removeAttribute('disabled');
-        }
-      });
-      container.insertBefore(clone, template.nextSibling);
-    });
-  });
-
-  var removeRowBtns = document.querySelectorAll('.admin-remove-row');
-  document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('admin-remove-row')) {
-      var row = e.target.closest('.admin-row');
-      if (row && !row.classList.contains('admin-row-template')) {
-        if (confirm('Supprimer cette ligne ?')) {
-          row.remove();
-        }
-      }
-    }
-  });
-
-  window.refreshPreview = refreshPreview;
-  window.toSlug = toSlug;
 })();
