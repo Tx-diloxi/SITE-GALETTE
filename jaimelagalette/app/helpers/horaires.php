@@ -24,12 +24,9 @@ function site_est_ouvert(PDO $pdo, int $pointCarteId, ?DateTime $date = null): b
     return (int)$stmt->fetchColumn() > 0;
 }
 
-// Récupère tous les horaires d'un point de vente depuis la base de données
-function site_get_horaires(PDO $pdo, int $pointCarteId): array {
+// Transforme des lignes horaire_Site en tableau d'horaires prêt à afficher
+function site_horaires_depuis_lignes(array $rows): array {
     global $joursFr;
-    $stmt = $pdo->prepare("SELECT * FROM horaire_Site WHERE point_carte_id = ? ORDER BY jour, ouverture");
-    $stmt->execute([$pointCarteId]);
-    $rows = $stmt->fetchAll();
     $horaires = [];
     foreach ($rows as $row) {
         $jourLabel = $joursFr[(int)$row['jour']] ?? 'Jour ' . $row['jour'];
@@ -42,6 +39,45 @@ function site_get_horaires(PDO $pdo, int $pointCarteId): array {
         ];
     }
     return $horaires;
+}
+
+// Récupère tous les horaires d'un point de vente depuis la base de données
+function site_get_horaires(PDO $pdo, int $pointCarteId): array {
+    $stmt = $pdo->prepare("SELECT * FROM horaire_Site WHERE point_carte_id = ? ORDER BY jour, ouverture");
+    $stmt->execute([$pointCarteId]);
+    return site_horaires_depuis_lignes($stmt->fetchAll());
+}
+
+// Récupère les lignes d'horaires de plusieurs points de vente en une seule requête, groupées par point
+function site_get_lignes_horaires(PDO $pdo, array $pointCarteIds): array {
+    if ($pointCarteIds === []) {
+        return [];
+    }
+    $marques = implode(',', array_fill(0, count($pointCarteIds), '?'));
+    $stmt = $pdo->prepare("SELECT * FROM horaire_Site WHERE point_carte_id IN ($marques) ORDER BY point_carte_id, jour, ouverture");
+    $stmt->execute(array_values($pointCarteIds));
+    $parPoint = [];
+    foreach ($stmt->fetchAll() as $row) {
+        $parPoint[(int)$row['point_carte_id']][] = $row;
+    }
+    return $parPoint;
+}
+
+// Indique si un point de vente est ouvert d'après ses lignes d'horaires (sans requête SQL).
+// Sans horaire défini, le site est considéré comme toujours ouvert (comme site_est_ouvert()).
+function site_est_ouvert_depuis_lignes(array $rows, ?DateTime $date = null): bool {
+    if ($rows === []) {
+        return true;
+    }
+    $date = $date ?? new DateTime('now', new DateTimeZone('Europe/Paris'));
+    $jour = (int)$date->format('w');
+    $heure = $date->format('H:i:s');
+    foreach ($rows as $row) {
+        if ((int)$row['jour'] === $jour && $row['ouverture'] <= $heure && $row['fermeture'] >= $heure) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Sauvegarde les horaires d'un point de vente en remplaçant complètement les anciens

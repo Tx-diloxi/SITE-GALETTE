@@ -17,11 +17,12 @@ if (!$carteStyleLoaded): $carteStyleLoaded = true;
 if ($carte):
     // Calcule l'ouverture et les horaires en temps réel depuis horaire_Site
     require_once HELPERS . 'horaires.php';
-    $pointsCarte = array_map(function ($p) use ($pdo) {
-        $p['est_ouvert'] = site_est_ouvert($pdo, (int)$p['id']);
-        $dynamicHoraires = site_get_horaires($pdo, (int)$p['id']);
-        if (!empty($dynamicHoraires)) {
-            $p['horaires'] = site_format_horaires_text($dynamicHoraires);
+    $lignesHoraires = site_get_lignes_horaires($pdo, array_map(fn($p) => (int)$p['id'], $pointsCarte));
+    $pointsCarte = array_map(function ($p) use ($lignesHoraires) {
+        $lignes = $lignesHoraires[(int)$p['id']] ?? [];
+        $p['est_ouvert'] = site_est_ouvert_depuis_lignes($lignes);
+        if ($lignes !== []) {
+            $p['horaires'] = site_format_horaires_text(site_horaires_depuis_lignes($lignes));
         }
         return $p;
     }, $pointsCarte);
@@ -50,9 +51,31 @@ if ($carte):
     </div>
 </section>
 
-<!-- Leaflet JS -->
-<script src="/assets/lib/leaflet/leaflet.js"></script>
 <script>
+// Leaflet (JS + tuiles) n'est chargé que lorsque la carte approche de l'écran : la carte est en bas
+// de page, inutile de bloquer le chargement initial avec ~150 Ko de script et une dizaine de tuiles.
+(function () {
+    function chargerLeaflet() {
+        var script = document.createElement('script');
+        script.src = '/assets/lib/leaflet/leaflet.js';
+        script.onload = initCarte;
+        document.head.appendChild(script);
+    }
+    var zone = document.getElementById('map');
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entrees) {
+            if (entrees[0].isIntersecting) {
+                observer.disconnect();
+                chargerLeaflet();
+            }
+        }, { rootMargin: '500px' });
+        observer.observe(zone);
+    } else {
+        chargerLeaflet();
+    }
+})();
+
+function initCarte() {
 const map = L.map('map').setView([48.083328, -1.68333], 6);
 
 L.tileLayer(
@@ -146,6 +169,7 @@ if (Array.isArray(vendeurs)) {
             className: 'leaflet-popup-galette'
         });
     });
+}
 }
 </script>
 <?php endif; ?>
