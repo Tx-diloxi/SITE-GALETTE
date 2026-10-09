@@ -3,7 +3,6 @@
   padding: 6rem 0;
   overflow: visible;
   height: auto;
-  min-height: -moz-max-content;
   min-height: max-content;
   position: relative;
 }
@@ -84,6 +83,41 @@
   z-index: 0;
 }
 
+.histoire-serpent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+.histoire-serpent path {
+  fill: none;
+  stroke: #EE7325;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 10 12;
+  animation: histoire-snake-flow 3s linear infinite;
+}
+
+.histoire-liste.has-snake::before, .histoire-liste.has-snake::after {
+  display: none;
+}
+.histoire-liste.has-snake .histoire-etape::after {
+  display: none;
+}
+.histoire-liste.has-snake .etape-image {
+  border-color: #EE7325;
+  box-shadow: 0 0 0 6px rgba(238, 115, 37, 0.25), 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes histoire-snake-flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
 @keyframes histoire-spine-flow {
   to {
     background-position: 0 40px;
@@ -165,8 +199,7 @@
   top: 15%;
   width: 140px;
   height: 140px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 50%;
   border: 4px solid #2A2A2A;
   z-index: 2;
@@ -239,6 +272,9 @@
   .histoire-liste::before, .histoire-liste::after {
     display: none;
   }
+  .histoire-serpent {
+    display: none;
+  }
   .histoire-etape {
     width: 90%;
     margin: 4rem auto;
@@ -259,4 +295,6 @@
   .histoire-etape .etape-image {
     display: none;
   }
-}/*# sourceMappingURL=histoire.css.map */
+}
+
+/*# sourceMappingURL=histoire.css.map */

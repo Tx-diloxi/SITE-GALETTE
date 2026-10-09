@@ -112,6 +112,52 @@ $histoire-gap-tablet: 7rem;
     }
 }
 
+// Serpentin : tracé SVG généré en JS (voir partials/histoire.php) qui relie
+// les médaillons des étapes en courbes en "S". Une fois actif (.has-snake),
+// il remplace le trait central droit.
+.histoire-serpent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
+
+    path {
+        fill: none;
+        stroke: $orange-galette;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-dasharray: 10 12;
+        animation: histoire-snake-flow 3s linear infinite;
+    }
+}
+
+.histoire-liste.has-snake {
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    // Le médaillon rond de chaque étape sert de repère sur le serpentin
+    .histoire-etape::after {
+        display: none;
+    }
+
+    .etape-image {
+        border-color: $orange-galette;
+        box-shadow: 0 0 0 6px rgba($orange-galette, 0.25), 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+}
+
+@keyframes histoire-snake-flow {
+    to {
+        stroke-dashoffset: -22;
+    }
+}
+
 @keyframes histoire-spine-flow {
     to {
         background-position: 0 40px;
@@ -302,6 +348,10 @@ $histoire-gap-tablet: 7rem;
         &::after {
             display: none;
         }
+    }
+
+    .histoire-serpent {
+        display: none;
     }
 
     .histoire-etape {

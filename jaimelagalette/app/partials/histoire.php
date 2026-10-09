@@ -69,6 +69,82 @@ if (!empty($titreHistoire)): ?>
     <?php endif; ?>
     <?php endif; ?>
 
+    <?php if (!empty($etapesHistoire)): ?>
+    <script>
+    // Trace un serpentin SVG (lignes + demi-tours arrondis) qui traverse les étapes ; s'adapte à leur nombre
+    (function () {
+        var liste = document.querySelector('#histoire .histoire-liste');
+        if (!liste) return;
+
+        var NS = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('class', 'histoire-serpent');
+        svg.setAttribute('aria-hidden', 'true');
+        var path = document.createElementNS(NS, 'path');
+        svg.appendChild(path);
+        // En dernier enfant : ne décale pas l'alternance gauche/droite des cartes (:nth-child)
+        liste.appendChild(svg);
+
+        function draw() {
+            var box = liste.getBoundingClientRect();
+            var rows = [];
+            var minX = Infinity, maxX = -Infinity;
+
+            // Un repère par étape : le médaillon. On retient aussi l'étendue des cartes.
+            liste.querySelectorAll('.histoire-etape').forEach(function (etape) {
+                var img = etape.querySelector('.etape-image');
+                if (!img) return;
+                var m = img.getBoundingClientRect();
+                if (!m.width) return;
+                var c = etape.getBoundingClientRect();
+                rows.push({ x: m.left + m.width / 2 - box.left, y: m.top + m.height / 2 - box.top });
+                minX = Math.min(minX, c.left - box.left);
+                maxX = Math.max(maxX, c.right - box.left);
+            });
+
+            // Moins de deux repères (ou mobile, médaillons masqués) : on garde le trait droit
+            if (rows.length < 2) {
+                liste.classList.remove('has-snake');
+                path.removeAttribute('d');
+                return;
+            }
+
+            // Bords où le serpent fait demi-tour, et rayon des virages (adapté à l'espace disponible)
+            var xl = Math.max(minX - 40, 10);
+            var xr = Math.min(maxX + 40, box.width - 10);
+            var gap = Infinity;
+            for (var i = 1; i < rows.length; i++) gap = Math.min(gap, rows[i].y - rows[i - 1].y);
+            var R = Math.max(8, Math.min(60, gap / 4, (xr - xl) / 4));
+
+            // Chaque étape : une ligne vers un bord, un demi-tour arrondi, puis retour en sens inverse
+            var d = 'M' + rows[0].x + ' ' + rows[0].y;
+            rows.forEach(function (row, i) {
+                if (i === rows.length - 1) {
+                    d += ' H' + row.x;
+                    return;
+                }
+                var right = i % 2 === 0;
+                var edge = right ? xr : xl;
+                var dir = right ? 1 : -1;
+                var sweep = right ? 1 : 0;
+                var next = rows[i + 1].y;
+                d += ' H' + (edge - dir * R)
+                   + ' A' + R + ' ' + R + ' 0 0 ' + sweep + ' ' + edge + ' ' + (row.y + R)
+                   + ' V' + (next - R)
+                   + ' A' + R + ' ' + R + ' 0 0 ' + sweep + ' ' + (edge - dir * R) + ' ' + next;
+            });
+            path.setAttribute('d', d);
+            liste.classList.add('has-snake');
+        }
+
+        draw();
+        window.addEventListener('load', draw);
+        window.addEventListener('resize', draw);
+        if ('ResizeObserver' in window) new ResizeObserver(draw).observe(liste);
+    })();
+    </script>
+    <?php endif; ?>
+
     <!-- Images décoratives de blé -->
     <img src="/assets/images/ble.png" alt="Illustration de blé" class="ble-deco-1" loading="lazy">
     <img src="/assets/images/ble.png" alt="Illustration de blé" class="ble-deco-2" loading="lazy">
