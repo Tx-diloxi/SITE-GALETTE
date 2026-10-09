@@ -1,102 +1,89 @@
 #!/bin/bash
-# Script de préparation pour déploiement LWS
-# Utilisation : bash deploy-lws.sh
-# Crée un dossier lws-ready/ avec la structure exacte à uploader sur LWS
+# Prépare le dossier lws-ready/ : exactement ce qu'il faut envoyer sur l'hébergement LWS.
+# Utilisation (depuis la racine du dépôt) :  bash deploy-lws.sh
+#
+# Le dossier généré n'est pas versionné (.gitignore) : relancez ce script avant chaque mise à jour.
+# Procédure complète : DEPLOIEMENT-LWS.md
 
 set -euo pipefail
 
-BASE_DIR="$(dirname "$0")"
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 SOURCE="$BASE_DIR/jaimelagalette"
 DEST="$BASE_DIR/lws-ready"
 
 echo "=== Préparation du déploiement LWS pour J'aime la Galette ==="
-echo ""
 
-# Nettoie une éventuelle précédente préparation
+# Vérifications préalables
+if [ ! -f "$SOURCE/vendor/autoload.php" ]; then
+    echo "ERREUR : jaimelagalette/vendor/autoload.php est introuvable (PHPMailer manquant)." >&2
+    echo "Lancez : docker compose exec php composer install --no-dev" >&2
+    exit 1
+fi
+if [ ! -f "$BASE_DIR/docker/sql/01_schema.sql" ] || [ ! -f "$BASE_DIR/docker/sql/02_seeds.sql" ]; then
+    echo "ERREUR : docker/sql/01_schema.sql ou 02_seeds.sql est introuvable." >&2
+    exit 1
+fi
+
 rm -rf "$DEST"
+mkdir -p "$DEST/htdocs" "$DEST/app" "$DEST/pages" "$DEST/vendor" "$DEST/_sql_a_importer"
 
-echo "1. Création de la structure..."
+echo "1. Site public : public/ -> htdocs/"
+cp -r "$SOURCE/public/." "$DEST/htdocs/"
+# Fichiers inutiles ou internes sur le serveur : sources SCSS, cartes de sources, notes internes
+find "$DEST/htdocs" \( -name '*.scss' -o -name '*.css.map' -o -name '.DS_Store' \) -type f -delete
+rm -f "$DEST/htdocs/chat.md" "$DEST/htdocs/text.php"
+# Aucune donnée personnelle ni envoi de test : les dossiers d'envoi repartent vides (on garde leur .htaccess)
+find "$DEST/htdocs/assets/uploads" -type f ! -name '.htaccess' ! -name '.gitkeep' -delete
+find "$DEST/htdocs/assets/images/admin-uploads" -type f ! -name '.htaccess' -delete
 
-# Crée les dossiers
-mkdir -p "$DEST/htdocs"
-mkdir -p "$DEST/app/config"
-mkdir -p "$DEST/app/helpers"
-mkdir -p "$DEST/app/partials"
-mkdir -p "$DEST/pages"
-mkdir -p "$DEST/vendor"
+echo "2. Application : app/, pages/, vendor/ et fichiers racine"
+cp -r "$SOURCE/app/." "$DEST/app/"
+cp -r "$SOURCE/pages/." "$DEST/pages/"
+cp -r "$SOURCE/vendor/." "$DEST/vendor/"
+cp "$SOURCE/config.php" "$SOURCE/config.local.example.php" "$SOURCE/composer.json" "$SOURCE/composer.lock" "$DEST/"
 
-echo "2. Copie des fichiers web (public/ → htdocs/)..."
+echo "3. Base de données : scripts à importer dans phpMyAdmin (à NE PAS envoyer sur le serveur)"
+cp "$BASE_DIR/docker/sql/01_schema.sql" "$BASE_DIR/docker/sql/02_seeds.sql" "$DEST/_sql_a_importer/"
 
-# Copie tout le contenu de public/ dans htdocs/
-cp -r "$SOURCE/public/"* "$DEST/htdocs/"
-cp -r "$SOURCE/public/."[!.]* "$DEST/htdocs/" 2>/dev/null || true
+cp "$BASE_DIR/DEPLOIEMENT-LWS.md" "$DEST/LISEZMOI-DEPLOIEMENT.md"
 
-echo "3. Copie des dossiers applicatifs..."
-
-# Copie app/, pages/, vendor/ à la racine (au même niveau que htdocs/)
-cp -r "$SOURCE/app/"* "$DEST/app/"
-cp -r "$SOURCE/pages/"* "$DEST/pages/"
-cp -r "$SOURCE/vendor/"* "$DEST/vendor/" 2>/dev/null || true
-
-# Fichiers racine
-cp "$SOURCE/config.php" "$DEST/config.php" 2>/dev/null || true
-cp "$SOURCE/composer.json" "$DEST/composer.json" 2>/dev/null || true
-cp "$SOURCE/composer.lock" "$DEST/composer.lock" 2>/dev/null || true
-
-echo "6. Création du fichier config.php LWS..."
-cat > "$DEST/config.php" << 'CONFIGEOF'
-<?php
-declare(strict_types=1);
-
-date_default_timezone_set('Europe/Paris');
-
-// ⚠️ REMPLACEZ CES VALEURS par vos identifiants LWS
-// (trouvables dans votre panel LWS > MySQL & PhpMyAdmin)
-$host   = 'localhost';        // Serveur MySQL LWS
-$dbName = 'votre_base';       // Nom de la base (ex: u123456_jaimelagalette)
-$dbUser = 'votre_utilisateur';// Utilisateur MySQL (ex: u123456_jalg)
-$dbPass = 'votre_motdepasse'; // Mot de passe MySQL
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host={$host};dbname={$dbName};charset={$charset}";
-
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $dbUser, $dbPass, $options);
-} catch (PDOException $e) {
-    error_log('Erreur de connexion BDD : ' . $e->getMessage());
-    http_response_code(500);
-    echo '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Erreur technique</title></head><body>';
-    echo '<h1>Erreur technique</h1>';
-    echo '<p>Une erreur est survenue. Veuillez réessayer dans quelques instants.</p>';
-    echo '</body></html>';
-    exit;
-}
-CONFIGEOF
+# Archive facultative (si un Python fonctionnel est disponible) : pratique pour un envoi en une fois.
+# On teste chaque candidat : sous Windows, "python3" peut être un raccourci du Microsoft Store inutilisable.
+PY=""
+for candidat in python3 python py; do
+    if command -v "$candidat" >/dev/null 2>&1 && "$candidat" -c "import zipfile" >/dev/null 2>&1; then
+        PY="$candidat"
+        break
+    fi
+done
+if [ -n "$PY" ]; then
+    "$PY" - "$DEST" <<'PYEOF'
+import os, sys, zipfile
+dest = sys.argv[1]
+archive = dest + '.zip'
+with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED) as z:
+    for dossier, _, fichiers in os.walk(dest):
+        if os.path.basename(dossier) == '_sql_a_importer' or '_sql_a_importer' in dossier.split(os.sep):
+            continue
+        for f in fichiers:
+            if f == 'LISEZMOI-DEPLOIEMENT.md' and dossier == dest:
+                continue
+            chemin = os.path.join(dossier, f)
+            z.write(chemin, os.path.relpath(chemin, dest))
+print('4. Archive prête : ' + os.path.basename(archive) + ' (sans le dossier _sql_a_importer)')
+PYEOF
+fi
 
 echo ""
-echo "=== ✓ Dossier 'lws-ready/' prêt ! ==="
+echo "=== lws-ready/ est prêt ==="
 echo ""
-echo "Ce qu'il reste à faire :"
+echo "À la racine de votre FTP LWS, envoyez :"
+echo "   htdocs/   app/   pages/   vendor/   config.php   config.local.example.php"
+echo "(ou décompressez lws-ready.zip à la racine du FTP)"
 echo ""
-echo "A) Connectez-vous à votre FTP LWS"
-echo "B) Uploadez le contenu de 'lws-ready/' à la racine de votre FTP :"
+echo "Ensuite, sur le serveur :"
+echo "   1. copiez config.local.example.php en config.local.php et remplissez-le (base, e-mail, mot de passe admin)"
+echo "   2. importez _sql_a_importer/01_schema.sql puis 02_seeds.sql dans phpMyAdmin"
+echo "   3. créez la tâche cron de purge RGPD"
 echo ""
-echo "   lws-ready/htdocs/   →   /htdocs/    (dossier web public)"
-echo "   lws-ready/app/      →   /app/"
-echo "   lws-ready/pages/    →   /pages/"
-echo "   lws-ready/vendor/   →   /vendor/"
-echo "   lws-ready/config.php →  /config.php"
-echo ""
-echo "C) Dans votre panel LWS :"
-echo "   1. Créez une base MySQL (MySql & PhpMyAdmin > Créer une base)"
-echo "   2. Importez le fichier docker/sql/01_schema.sql dans phpMyAdmin"
-echo "   3. Modifiez /config.php sur le serveur avec vos vrais identifiants"
-echo ""
-echo "D) Supprimez default_index.html de /htdocs/ sur le serveur"
-echo ""
+echo "Détail pas à pas : DEPLOIEMENT-LWS.md"
