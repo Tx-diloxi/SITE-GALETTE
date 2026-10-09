@@ -13,8 +13,13 @@ if (!$introStyleLoaded): $introStyleLoaded = true;
 if (!empty($intro)): ?>
 <!-- Section racine du partial intro -->
 <section id="intro">
+    <!-- Fil d'Ariane : pastille Accueil › page courante -->
     <div class="fil_ariane">
-        <a href="/">Accueil</a> > <span><?= htmlspecialchars($intro['nom_page']) ?></span>
+        <nav aria-label="Fil d'Ariane">
+            <a href="/">Accueil</a>
+            <span class="sep" aria-hidden="true">›</span>
+            <span aria-current="page"><?= htmlspecialchars($intro['nom_page']) ?></span>
+        </nav>
     </div>
     <!-- Titre principal du intro -->
     <div class="titre">

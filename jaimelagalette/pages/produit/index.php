@@ -89,13 +89,19 @@ include PARTIALS . 'header.php';
 
 <main>
 <section id="intro">
+    <!-- Fil d'Ariane : pastille Accueil › Nos produits › marque › produit -->
     <div class="fil_ariane">
-        <a href="/">Accueil</a> &gt;
-        <a href="/nos-produits">Nos produits</a> &gt;
-        <?php if ($marqueSlug): ?>
-        <a href="/nos-produits/<?= htmlspecialchars($marqueSlug) ?>"><?= htmlspecialchars($produit['marque_nom'] ?? '') ?></a> &gt;
-        <?php endif; ?>
-        <span><?= htmlspecialchars($produit['nom']) ?></span>
+        <nav aria-label="Fil d'Ariane">
+            <a href="/">Accueil</a>
+            <span class="sep" aria-hidden="true">›</span>
+            <a href="/nos-produits">Nos produits</a>
+            <span class="sep" aria-hidden="true">›</span>
+            <?php if ($marqueSlug): ?>
+            <a href="/nos-produits/<?= htmlspecialchars($marqueSlug) ?>"><?= htmlspecialchars($produit['marque_nom'] ?? '') ?></a>
+            <span class="sep" aria-hidden="true">›</span>
+            <?php endif; ?>
+            <span aria-current="page"><?= htmlspecialchars($produit['nom']) ?></span>
+        </nav>
     </div>
     <div class="titre">
         <h3><?= htmlspecialchars($produit['sous_titre'] ?? '') ?></h3>
