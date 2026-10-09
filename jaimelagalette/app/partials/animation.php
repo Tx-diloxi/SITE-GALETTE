@@ -40,7 +40,7 @@ if (!empty($animation)): ?>
             <?php if (!empty($card['image'])): ?>
             <!-- Image illustrant l'animation -->
             <img src="<?= htmlspecialchars($card['image'], ENT_QUOTES, 'UTF-8') ?>"
-                alt="<?= htmlspecialchars($card['nom'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+                alt="<?= htmlspecialchars($card['nom'] ?? '', ENT_QUOTES, 'UTF-8') ?>" loading="lazy" decoding="async">
             <?php endif; ?>
             <!-- Titre de l'animation -->
             <h2><?= htmlspecialchars($card['nom'] ?? '', ENT_QUOTES, 'UTF-8') ?></h2>

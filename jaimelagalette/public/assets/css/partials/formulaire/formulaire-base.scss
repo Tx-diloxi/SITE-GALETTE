@@ -232,7 +232,8 @@
 
             a {
                 color: $orange-galette;
-                text-decoration: none;
+                // Souligné : la couleur seule ne suffit pas à distinguer le lien du texte (accessibilité)
+                text-decoration: underline;
                 font-weight: 500;
                 transition: color 0.2s ease;
 

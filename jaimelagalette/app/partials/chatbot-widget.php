@@ -10,7 +10,7 @@ if (!$chatbotWidgetStyleLoaded): $chatbotWidgetStyleLoaded = true; ?>
 <!-- Widget chatbot intégré à chaque page -->
 <div id="chatbot-widget" class="chatbot-widget" data-page="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? '/', ENT_QUOTES, 'UTF-8') ?>">
   <!-- Bouton d'ouverture du chatbot -->
-  <button id="chatbot-toggle" class="chatbot-toggle" aria-expanded="false" aria-label="Ouvrir l'assistant virtuel">
+  <button id="chatbot-toggle" class="chatbot-toggle" aria-expanded="false" aria-label="Une question ? Ouvrir l'assistant virtuel">
     <!-- Icône de message -->
     <svg class="chatbot-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>

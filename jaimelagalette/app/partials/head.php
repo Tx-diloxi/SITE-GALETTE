@@ -134,6 +134,7 @@ $websiteSchema = [
     <?= jsonLd($extraSchema) ?>
 
     <?php endforeach; ?>
+    <link rel="preload" href="<?= BASE_URL ?>assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
     <link rel="icon" href="<?= BASE_URL ?>assets/images/favicon.ico" type="image/x-icon">
 </head>

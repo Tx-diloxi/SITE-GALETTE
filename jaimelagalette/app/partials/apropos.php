@@ -42,7 +42,7 @@ if ($apropos): ?>
     <?php if ($apropos['image']): ?>
     <!-- Image principale de la section à propos -->
     <img src="<?= htmlspecialchars($apropos['image'], ENT_QUOTES, 'UTF-8') ?>"
-        alt="<?= htmlspecialchars($apropos['alt'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+        alt="<?= htmlspecialchars($apropos['alt'] ?? '', ENT_QUOTES, 'UTF-8') ?>" loading="lazy" decoding="async">
     <?php endif; ?>
     <!-- Image décorative de vague en bas de section -->
     <img src="/assets/images/vague1.svg" class="vague" alt="Image d'une vague stylisée">

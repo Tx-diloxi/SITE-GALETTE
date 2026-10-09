@@ -43,7 +43,7 @@ if ($essentielTitre && $cardsIngredient):
         <?php endforeach; ?>
 
         <img src="<?= htmlspecialchars($essentielTitre['image_fond'], ENT_QUOTES, 'UTF-8') ?>" class="mascotte"
-            alt="<?= htmlspecialchars($essentielTitre['alt_fond'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+            alt="<?= htmlspecialchars($essentielTitre['alt_fond'] ?? '', ENT_QUOTES, 'UTF-8') ?>" loading="lazy" decoding="async">
     </div>
 
 

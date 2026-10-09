@@ -108,9 +108,6 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   text-align: left;
 }
-#formulaire-contact .formulaire-champ input[type=text]::-moz-placeholder, #formulaire-contact .formulaire-champ input[type=email]::-moz-placeholder, #formulaire-contact .formulaire-champ input[type=tel]::-moz-placeholder, #formulaire-contact .formulaire-champ select::-moz-placeholder, #formulaire-contact .formulaire-champ textarea::-moz-placeholder, #formulaire-recrutement .formulaire-champ input[type=text]::-moz-placeholder, #formulaire-recrutement .formulaire-champ input[type=email]::-moz-placeholder, #formulaire-recrutement .formulaire-champ input[type=tel]::-moz-placeholder, #formulaire-recrutement .formulaire-champ select::-moz-placeholder, #formulaire-recrutement .formulaire-champ textarea::-moz-placeholder {
-  color: #666666;
-}
 #formulaire-contact .formulaire-champ input[type=text]::placeholder,
 #formulaire-contact .formulaire-champ input[type=email]::placeholder,
 #formulaire-contact .formulaire-champ input[type=tel]::placeholder,
@@ -221,9 +218,7 @@
   font-size: 0.9rem;
   color: #888888;
   line-height: 1.6;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 #formulaire-contact .formulaire-rgpd .formulaire-rgpd-label input[type=checkbox],
 #formulaire-recrutement .formulaire-rgpd .formulaire-rgpd-label input[type=checkbox] {
@@ -241,7 +236,7 @@
 #formulaire-contact .formulaire-rgpd .formulaire-rgpd-label a,
 #formulaire-recrutement .formulaire-rgpd .formulaire-rgpd-label a {
   color: #EE7325;
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: 500;
   transition: color 0.2s ease;
 }
@@ -400,4 +395,6 @@
     font-size: 0.9rem;
     width: 100%;
   }
-}/*# sourceMappingURL=formulaire-base.css.map */
+}
+
+/*# sourceMappingURL=formulaire-base.css.map */

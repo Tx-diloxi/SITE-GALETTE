@@ -24,7 +24,7 @@ if (!$footerStyleLoaded): $footerStyleLoaded = true;
                 <!-- Groupe du logo et de la description de la marque -->
                 <div class="brand-logo-group">
                     <!-- Image du logo dans le footer -->
-                    <img src="<?= htmlspecialchars($footer['logo']) ?>" alt="Logo" class="footer-logo">
+                    <img src="<?= htmlspecialchars($footer['logo']) ?>" alt="Logo" class="footer-logo" loading="lazy" decoding="async">
                 </div>
                 <!-- Description textuelle de la marque -->
                 <h2><?= htmlspecialchars($footer['description']) ?></h2>

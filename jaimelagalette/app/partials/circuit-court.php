@@ -42,7 +42,7 @@ if ($circuitCourt): ?>
     <?php if ($circuitCourt['image']): ?>
     <!-- Image principale de la section circuit-court -->
     <img src="<?= htmlspecialchars($circuitCourt['image'], ENT_QUOTES, 'UTF-8') ?>"
-        alt="<?= htmlspecialchars($circuitCourt['alt'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+        alt="<?= htmlspecialchars($circuitCourt['alt'] ?? '', ENT_QUOTES, 'UTF-8') ?>" loading="lazy" decoding="async">
     <?php endif; ?>
     <!-- Image décorative de vague en bas de section -->
     <img src="/assets/images/vague2.svg" class="vague" alt="Image d'une vague stylisée">
