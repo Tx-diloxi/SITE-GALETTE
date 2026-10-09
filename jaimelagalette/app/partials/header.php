@@ -266,9 +266,6 @@ if (!$headerStyleLoaded): $headerStyleLoaded = true;
     submenuLinks.forEach(function(link) {
         // Intercepte le clic sur le lien d'ancrage
         link.addEventListener('click', function(e) {
-            // Empêche la navigation par défaut du lien
-            e.preventDefault();
-
             // Récupère la valeur de l'attribut href du lien
             const href = this.getAttribute('href');
             // Extrait l'identifiant de la section cible après le #
@@ -276,8 +273,10 @@ if (!$headerStyleLoaded): $headerStyleLoaded = true;
             // Récupère l'élément DOM de la section cible
             const targetSection = document.getElementById(targetId);
 
-            // Si la section cible existe dans le DOM
+            // Section absente de la page courante : on laisse le lien naviguer vers l'autre page
             if (targetSection) {
+                // Empêche la navigation par défaut pour faire défiler en douceur
+                e.preventDefault();
                 // Ferme la modale de navigation
                 closeModal();
 
