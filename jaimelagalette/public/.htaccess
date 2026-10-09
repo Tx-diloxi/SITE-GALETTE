@@ -2,6 +2,13 @@
     RewriteEngine On
     RewriteBase /
 
+    # Force HTTPS en production (pas en local). Le test X-Forwarded-Proto évite une boucle de
+    # redirection si l'hébergeur termine le HTTPS en amont.
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
     # Images WebP : si le navigateur l'accepte et qu'une version .webp existe à côté de l'image
     # (générée par optimiser_images.py), on la sert à la place du PNG/JPEG, sans changer les URL.
     RewriteCond %{HTTP_ACCEPT} image/webp
