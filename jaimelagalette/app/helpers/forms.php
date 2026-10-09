@@ -315,6 +315,7 @@ function handleApplicationForm(PDO $pdo): array
             ':cv_path'         => $cvPath,
             ':rgpd'            => $rgpd,
         ]);
+        $applicationId = (int)$pdo->lastInsertId();
     } catch (PDOException $e) {
         error_log('Application form insert error: ' . $e->getMessage());
         // Nettoie le fichier uploadé en cas d'erreur
@@ -351,9 +352,9 @@ function handleApplicationForm(PDO $pdo): array
     $cvLinkHtml = '';
     $cvLinkText = '';
     if ($cvPath !== null) {
-        $cvUrl = '/assets/uploads/cv/' . rawurlencode($cvPath);
-        $cvLinkHtml = "<tr><td><strong>CV</strong></td><td><a href='{$cvUrl}'>Télécharger le CV</a></td></tr>";
-        $cvLinkText = "\nCV : " . BASE_URL . "assets/uploads/cv/{$cvPath}";
+        // Le CV est une donnée personnelle : pas de lien public, il se consulte dans l'espace d'administration
+        $cvLinkHtml = "<tr><td><strong>CV</strong></td><td>Joint à la candidature n°{$applicationId} (espace d'administration &gt; Candidatures)</td></tr>";
+        $cvLinkText = "\nCV : joint à la candidature n°{$applicationId} (espace d'administration > Candidatures)";
     }
 
     $emailType = ($offreEmploiId !== null) ? "Candidature – {$poste}" : "Candidature spontanée";
