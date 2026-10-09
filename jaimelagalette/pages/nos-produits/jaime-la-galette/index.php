@@ -62,12 +62,10 @@ $contact      = $pdo->query("SELECT * FROM partial_Contact WHERE id = 1")->fetch
 $cardsContact = $pdo->query("SELECT * FROM card_Contact WHERE partial_contact_id = 1 ORDER BY id")->fetchAll();
 
 // SEO
-$pageTitle = "Gamme J'aime la Galette – Crêpes, galettes et spécialités bretonnes";
-$pageDesc  = "Découvrez la gamme J'aime la Galette : galettes de blé noir pur beurre, crêpes sucrées, chips de galette au caramel au beurre salé. Sans additifs, fabriquées en Bretagne.";
+$pageTitle = "Galette bretonne artisanale de blé noir – J'aime la Galette";
+$pageDesc  = "Galettes de blé noir pur beurre, crêpes sucrées et chips de galette au caramel au beurre salé : la gamme J'aime la Galette, artisanale, sans additifs, fabriquée en Bretagne.";
 
 // --- JSON-LD Product for featured products ---
-$siteProtocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$siteHost = $_SERVER['HTTP_HOST'] ?? 'www.jaimelagalette.com';
 $productSchemas = [];
 foreach ($listeProduits as $p) {
     $ps = [
@@ -79,7 +77,7 @@ foreach ($listeProduits as $p) {
         'category' => 'Crêpes et galettes',
     ];
     if (!empty($p['image'])) {
-        $ps['image'] = $siteProtocol . '://' . $siteHost . '/' . ltrim($p['image'], '/');
+        $ps['image'] = SITE_URL . '/' . ltrim($p['image'], '/');
     }
     $productSchemas[] = $ps;
 }

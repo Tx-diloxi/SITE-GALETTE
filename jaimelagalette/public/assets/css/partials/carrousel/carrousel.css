@@ -126,8 +126,7 @@
   align-items: center;
 }
 #carrousel .carrousel-produits__slide img {
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   transition: all 0.6s ease;
 }
 #carrousel .carrousel-produits__slide.actif {
@@ -208,7 +207,7 @@
   #carrousel {
     background: linear-gradient(to bottom, #2d1401 0%, #111111 100%);
   }
-  #carrousel .titre h2 {
+  #carrousel .titre h1, #carrousel .titre h2 {
     font-size: 38px;
   }
   #carrousel .carrousel-produits__compteur {
@@ -259,4 +258,6 @@
   #carrousel .carrousel-produits__slide--next {
     display: none;
   }
-}/*# sourceMappingURL=carrousel.css.map */
+}
+
+/*# sourceMappingURL=carrousel.css.map */

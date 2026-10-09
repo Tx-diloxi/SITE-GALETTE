@@ -23,7 +23,7 @@ $contact     = $pdo->query("SELECT * FROM partial_Contact WHERE id = 1")->fetch(
 $cardsContact = $pdo->query("SELECT * FROM card_Contact WHERE partial_contact_id = 1 ORDER BY id")->fetchAll();
 
 // SEO
-$pageTitle = "Notre savoir-faire artisanal – Fabrication de crêpes et galettes | J'aime la Galette";
+$pageTitle = "Fabrication artisanale de galettes bretonnes | J'aime la Galette";
 $pageDesc  = "Découvrez comment nous fabriquons nos crêpes et galettes bretonnes : pâte fraîche, cuisson traditionnelle, surgélation rapide. Un savoir-faire artisanal pour une qualité sans additif.";
 
 include PARTIALS . 'head.php';

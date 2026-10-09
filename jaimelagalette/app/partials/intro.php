@@ -24,7 +24,7 @@ if (!empty($intro)): ?>
     <!-- Titre principal du intro -->
     <div class="titre">
         <h3><?= htmlspecialchars($intro['sous_titre']) ?></h3>
-        <h2><?= htmlspecialchars($intro['titre']) ?></h2>
+        <h1><?= htmlspecialchars($intro['titre']) ?></h1>
     </div>
 
     <?php if (!empty($intro['citation'])): ?>

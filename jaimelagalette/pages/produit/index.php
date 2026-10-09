@@ -75,9 +75,7 @@ $productSchema = [
     'category' => 'Crêpes et galettes',
 ];
 if (!empty($produit['image'])) {
-    $siteProtocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    $siteHost = $_SERVER['HTTP_HOST'] ?? 'www.jaimelagalette.com';
-    $productSchema['image'] = $siteProtocol . '://' . $siteHost . '/' . ltrim($produit['image'], '/');
+    $productSchema['image'] = SITE_URL . '/' . ltrim($produit['image'], '/');
 }
 
 include PARTIALS . 'head.php';
@@ -105,7 +103,7 @@ include PARTIALS . 'header.php';
     </div>
     <div class="titre">
         <h3><?= htmlspecialchars($produit['sous_titre'] ?? '') ?></h3>
-        <h2><?= htmlspecialchars($produit['nom']) ?></h2>
+        <h1><?= htmlspecialchars($produit['nom']) ?></h1>
     </div>
 </section>
 

@@ -50,8 +50,8 @@ $contact     = $pdo->query("SELECT * FROM partial_Contact WHERE id = 1")->fetch(
 $cardsContact = $pdo->query("SELECT * FROM card_Contact WHERE partial_contact_id = 1 ORDER BY id")->fetchAll();
 
 // --- SEO et composition de la page ---
-$pageTitle = "J'aime la Galette – Fabricant de crêpes et galettes bretonnes B2B";
-$pageDesc  = "Fabricant breton de crêpes et galettes sans additifs ni conservateurs, livrées en ultra-frais. 3 ateliers (Broons, Alençon, Angers) au service des GMS, restauration collective et traiteurs.";
+$pageTitle = "J'aime la Galette – Galettes et crêpes bretonnes artisanales";
+$pageDesc  = "Galette de Broons : galettes de blé noir et crêpes bretonnes artisanales de qualité, ultra-fraîches, sans additifs ni conservateurs. 8 ateliers en Bretagne, Normandie et Pays de la Loire.";
 
 include PARTIALS . 'head.php';
 include PARTIALS . 'header.php';

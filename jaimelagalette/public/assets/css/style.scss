@@ -112,7 +112,8 @@ h3 {
         color: $orange-galette;
     }
 
-    // Style des titres principaux h2 dans les blocs de titre
+    // Style des titres principaux h1 et h2 dans les blocs de titre
+    h1,
     h2 {
         // Grande taille de police adaptee aux ecrans larges
         font-size: $h2-pc-taille;
@@ -315,6 +316,7 @@ img[class*="vague"] {
     }
 
     // Reduit la taille des titres h2 sur les ecrans moyens
+    .titre h1,
     .titre h2 {
         font-size: 3rem;
     }
@@ -343,6 +345,7 @@ img[class*="vague"] {
     }
 
     // Reduit encore la taille des titres h2 sur mobile
+    .titre h1,
     .titre h2 {
         font-size: 2.5rem;
     }

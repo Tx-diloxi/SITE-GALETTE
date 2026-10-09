@@ -1,14 +1,24 @@
+# robots.txt de J'aime la Galette
+# Les feuilles de style et scripts restent accessibles : Google en a besoin pour rendre les pages.
+
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /assets/css/
 Disallow: /vendor/
+Disallow: /chatbot.php
 
+# Moteurs de réponse et assistants IA : mêmes règles, explicitement autorisés.
+# (Un groupe nommé remplace le groupe "*" : les interdictions sont donc répétées ici.)
 User-agent: GPTBot
-Allow: /
-
 User-agent: OAI-SearchBot
-Allow: /
-
+User-agent: ChatGPT-User
 User-agent: PerplexityBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
 Allow: /
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /chatbot.php
+
+# Résumé du site à destination des assistants IA : https://www.jaimelagalette.com/llms.txt
+Sitemap: https://www.jaimelagalette.com/sitemap.xml

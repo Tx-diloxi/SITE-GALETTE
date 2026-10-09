@@ -37,8 +37,8 @@ $contact     = $pdo->query("SELECT * FROM partial_Contact WHERE id = 1")->fetch(
 $cardsContact = $pdo->query("SELECT * FROM card_Contact WHERE partial_contact_id = 1 ORDER BY id")->fetchAll();
 
 // SEO
-$pageTitle = "Nos gammes de crêpes et galettes bretonnes – J'aime la Galette";
-$pageDesc  = "Découvrez nos gammes J'aime la Galette et Be Good'n : galettes de blé noir, crêpes sucrées, chips de galettes. Fabriquées en Bretagne sans additifs, ultra-fraîches pour professionnels.";
+$pageTitle = "Nos galettes bretonnes et crêpes artisanales | J'aime la Galette";
+$pageDesc  = "Galettes de blé noir, crêpes sucrées et chips de galette : découvrez les gammes J'aime la Galette et Be Good'n, fabriquées en Bretagne, sans additifs, ultra-fraîches pour professionnels.";
 
 include PARTIALS . 'head.php';
 include PARTIALS . 'header.php';

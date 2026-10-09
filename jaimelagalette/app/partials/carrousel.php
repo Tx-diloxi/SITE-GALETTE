@@ -27,7 +27,7 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
 
     <div class="titre">
         <h3 id="titre-sous-titre"><?= htmlspecialchars($titre ?? '', ENT_QUOTES, 'UTF-8') ?></h3>
-        <h2 id="titre-principal"><?= htmlspecialchars($sousTitre ?? '', ENT_QUOTES, 'UTF-8') ?></h2>
+        <h1 id="titre-principal"><?= htmlspecialchars($sousTitre ?? '', ENT_QUOTES, 'UTF-8') ?></h1>
     </div>
 
     <!-- Compteur -->

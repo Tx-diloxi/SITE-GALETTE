@@ -45,33 +45,15 @@ $contact     = $pdo->query("SELECT * FROM partial_Contact WHERE id = 1")->fetch(
 $cardsContact = $pdo->query("SELECT * FROM card_Contact WHERE partial_contact_id = 1 ORDER BY id")->fetchAll();
 
 // SEO
-$pageTitle = "Le Groupe J'aime la Galette – Fabricant breton de crêpes et galettes";
-$pageDesc  = "Découvrez le groupe J'aime la Galette : 3 ateliers à Broons (22), Alençon (61) et Angers (49), 0 additif, 0 conservateur. Histoire, valeurs, équipe et savoir-faire artisanal.";
+$pageTitle = "Le Groupe J'aime la Galette – Galette de Broons depuis 2013";
+$pageDesc  = "Histoire de La Galette de Broons, fabricant de galettes bretonnes artisanales de qualité : 8 ateliers en Bretagne, Normandie et Pays de la Loire, 0 additif, 0 conservateur, savoir-faire depuis 2013.";
 
 // --- JSON-LD LocalBusiness for each production site ---
+require_once HELPERS . 'seo.php';
 $localBusinessSchemas = [];
 foreach ($pointsCarte as $point) {
     if (!empty($point['nom'])) {
-        $lb = [
-            '@context' => 'https://schema.org',
-            '@type' => 'FoodEstablishment',
-            'name' => $point['nom'],
-            'description' => 'Atelier de fabrication de crêpes et galettes bretonnes',
-            'address' => [
-                '@type' => 'PostalAddress',
-                'streetAddress' => $point['adresse'] ?? '',
-                'addressLocality' => $point['ville'] ?? '',
-                'postalCode' => $point['code_postal'] ?? '',
-                'addressCountry' => 'FR',
-            ],
-        ];
-        if (!empty($point['telephone'])) {
-            $lb['telephone'] = $point['telephone'];
-        }
-        if (!empty($point['email'])) {
-            $lb['email'] = $point['email'];
-        }
-        $localBusinessSchemas[] = $lb;
+        $localBusinessSchemas[] = atelierSchema($point);
     }
 }
 

@@ -81,8 +81,6 @@ $pageTitle = "Gamme Be Good'n – Crêpes et galettes bio | J'aime la Galette";
 $pageDesc  = "Découvrez la gamme Be Good'n par J'aime la Galette : crêpes et galettes bio, sans additifs ni conservateurs. Des recettes authentiques pour une alimentation saine et responsable.";
 
 // --- JSON-LD Product for featured products ---
-$siteProtocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-$siteHost = $_SERVER['HTTP_HOST'] ?? 'www.jaimelagalette.com';
 $productSchemas = [];
 foreach ($listeProduits as $p) {
     $ps = [
@@ -94,7 +92,7 @@ foreach ($listeProduits as $p) {
         'category' => 'Crêpes et galettes bio',
     ];
     if (!empty($p['image'])) {
-        $ps['image'] = $siteProtocol . '://' . $siteHost . '/' . ltrim($p['image'], '/');
+        $ps['image'] = SITE_URL . '/' . ltrim($p['image'], '/');
     }
     $productSchemas[] = $ps;
 }

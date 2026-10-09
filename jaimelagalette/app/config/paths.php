@@ -19,3 +19,9 @@ if (!defined('BASE_URL')) {
 if (!defined('WEB_ROOT')) {
     define('WEB_ROOT', APP_ROOT . (is_dir(APP_ROOT . 'htdocs') ? 'htdocs' : 'public') . DIRECTORY_SEPARATOR);
 }
+
+// URL publique du site (sans slash final) : canonical, Open Graph, sitemap et données structurées.
+// À adapter au domaine définitif, ou à surcharger avec la variable d'environnement SITE_URL.
+if (!defined('SITE_URL')) {
+    define('SITE_URL', rtrim((string)(getenv('SITE_URL') ?: 'https://www.jaimelagalette.com'), '/'));
+}

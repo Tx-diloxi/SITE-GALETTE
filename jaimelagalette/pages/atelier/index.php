@@ -66,26 +66,14 @@ $footerLegal = $pdo->query("SELECT * FROM footer_legal WHERE footer_id = 1 ORDER
 
 // SEO
 $typeLabel = $atelier['type_site'] ?? 'Site de production';
-$pageTitle = htmlspecialchars($atelier['nom']) . " – " . $typeLabel . " | J'aime la Galette";
+$pageTitle = htmlspecialchars($atelier['nom']) . ($typeLabel === 'Atelier'
+    ? " – Atelier de galettes bretonnes à " . htmlspecialchars($atelier['ville'])
+    : " – " . $typeLabel) . " | J'aime la Galette";
 $pageDesc = $typeLabel . " " . htmlspecialchars($atelier['nom']) . " à " . htmlspecialchars($atelier['ville']) . " (" . htmlspecialchars($atelier['code_postal']) . "). Fabrication de crêpes et galettes bretonnes sans additifs ni conservateurs.";
 
-// JSON-LD LocalBusiness
-$localBusinessSchema = [
-    '@context' => 'https://schema.org',
-    '@type' => 'FoodEstablishment',
-    'name' => $atelier['nom'],
-    'description' => strip_tags($pageDesc),
-    'url' => (($proto = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'www.jaimelagalette.com') . $_SERVER['REQUEST_URI']),
-    'address' => [
-        '@type' => 'PostalAddress',
-        'streetAddress' => $atelier['adresse'] ?? '',
-        'addressLocality' => $atelier['ville'] ?? '',
-        'postalCode' => $atelier['code_postal'] ?? '',
-        'addressCountry' => 'FR',
-    ],
-];
-if (!empty($atelier['telephone'])) $localBusinessSchema['telephone'] = $atelier['telephone'];
-if (!empty($atelier['email'])) $localBusinessSchema['email'] = $atelier['email'];
+// JSON-LD LocalBusiness (adresse et coordonnées GPS)
+require_once HELPERS . 'seo.php';
+$localBusinessSchema = atelierSchema($atelier, strip_tags($pageDesc));
 
 include PARTIALS . 'head.php';
 include PARTIALS . 'header.php';

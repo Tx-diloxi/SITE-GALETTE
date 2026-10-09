@@ -257,7 +257,7 @@
     #carrousel {
         background: linear-gradient(to bottom, #2d1401 0%, $nuit 100%);
 
-        .titre h2 { font-size: 38px; }
+        .titre h1, .titre h2 { font-size: 38px; }
 
         .carrousel-produits__compteur {
             top: 64%;

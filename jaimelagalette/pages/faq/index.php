@@ -35,7 +35,7 @@ foreach ($categories as $categorie) {
 }
 
 // SEO
-$pageTitle = "FAQ – Questions fréquentes | J'aime la Galette";
+$pageTitle = "FAQ – Galettes et crêpes bretonnes artisanales | J'aime la Galette";
 $pageDesc  = "Toutes les réponses à vos questions sur les crêpes et galettes J'aime la Galette : additifs, livraison, points de vente, RSE, recrutement. Besoin d'aide ? Notre chatbot vous répond.";
 
 include PARTIALS . 'head.php';
@@ -76,7 +76,7 @@ foreach ($questionsParCategorie as $catId => $questions) {
         <!-- Titres de la section FAQ -->
         <div class="titre">
             <h3><?= htmlspecialchars($faqData['sous_titre'] ?? 'On vous dit tout', ENT_QUOTES, 'UTF-8') ?></h3>
-            <h2><?= htmlspecialchars($faqData['titre'] ?? 'FOIRE AUX QUESTIONS', ENT_QUOTES, 'UTF-8') ?></h2>
+            <h1><?= htmlspecialchars($faqData['titre'] ?? 'FOIRE AUX QUESTIONS', ENT_QUOTES, 'UTF-8') ?></h1>
             <p><?= htmlspecialchars($faqData['contenu'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
         </div>
 

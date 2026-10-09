@@ -42,7 +42,7 @@ $sites = $pdo->query("SELECT id, nom, email_rh, ville FROM point_Carte WHERE ema
 
 // SEO
 $pageTitle = "Recrutement – Offres d'emploi chez J'aime la Galette";
-$pageDesc  = "Rejoignez J'aime la Galette ! Découvrez nos offres d'emploi dans nos ateliers de Broons, Alençon et Angers. Métiers de la production, logistique, commercial et qualité.";
+$pageDesc  = "Rejoignez J'aime la Galette ! Offres d'emploi dans nos ateliers de Bretagne, Normandie et Pays de la Loire : production, logistique, commercial et qualité.";
 
 include PARTIALS . 'head.php';
 include PARTIALS . 'header.php';

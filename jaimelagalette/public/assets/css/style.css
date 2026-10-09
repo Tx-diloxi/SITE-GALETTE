@@ -70,6 +70,7 @@ h3 {
 .titre h3 {
   color: #EE7325;
 }
+.titre h1,
 .titre h2 {
   font-size: 80px;
   font-weight: 900;
@@ -182,6 +183,7 @@ img[class*=vague] {
   .grid-5, .grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
+  .titre h1,
   .titre h2 {
     font-size: 3rem;
   }
@@ -199,6 +201,7 @@ img[class*=vague] {
   .grid-5, .grid-4, .grid-2 {
     grid-template-columns: 1fr;
   }
+  .titre h1,
   .titre h2 {
     font-size: 2.5rem;
   }

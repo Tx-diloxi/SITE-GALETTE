@@ -2,6 +2,8 @@
 // Active le typage strict pour tout le fichier
 declare(strict_types=1);
 
+require_once __DIR__ . '/../config/paths.php';
+
 // Convertit une chaîne de caractères en slug SEO (URL-friendly)
 function slugify(string $text): string
 {
@@ -44,4 +46,54 @@ function produitUrl(array $produit): string
 function atelierUrl(array $point): string
 {
     return '/atelier/' . (int)$point['id'] . '/' . slugify($point['nom'] ?: $point['ville']);
+}
+
+// URL absolue d'un chemin du site, sur le domaine public (SITE_URL)
+function siteUrl(string $path = '/'): string
+{
+    return SITE_URL . '/' . ltrim($path, '/');
+}
+
+// Balise <script> JSON-LD (données structurées schema.org)
+function jsonLd(array $data): string
+{
+    $flags = JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+    return '<script type="application/ld+json">' . json_encode($data, $flags) . '</script>';
+}
+
+// Schéma JSON-LD d'un atelier ou du siège, avec adresse et coordonnées GPS (référencement local)
+function atelierSchema(array $point, ?string $description = null): array
+{
+    $estAtelier = ($point['type_site'] ?? 'Atelier') === 'Atelier';
+    $schema = [
+        '@context' => 'https://schema.org',
+        '@type' => $estAtelier ? 'FoodEstablishment' : 'Organization',
+        'name' => $point['nom'],
+        'description' => $description ?? ($estAtelier
+            ? 'Atelier de fabrication de galettes de blé noir et de crêpes bretonnes artisanales'
+            : "Siège social de J'aime la Galette (La Galette de Broons)"),
+        'url' => siteUrl(atelierUrl($point)),
+        'parentOrganization' => ['@id' => SITE_URL . '/#organization'],
+        'address' => [
+            '@type' => 'PostalAddress',
+            'streetAddress' => $point['adresse'] ?? '',
+            'addressLocality' => $point['ville'] ?? '',
+            'postalCode' => $point['code_postal'] ?? '',
+            'addressCountry' => 'FR',
+        ],
+    ];
+    if (!empty($point['latitude']) && !empty($point['longitude'])) {
+        $schema['geo'] = [
+            '@type' => 'GeoCoordinates',
+            'latitude' => (float)$point['latitude'],
+            'longitude' => (float)$point['longitude'],
+        ];
+    }
+    if (!empty($point['telephone'])) {
+        $schema['telephone'] = $point['telephone'];
+    }
+    if (!empty($point['email'])) {
+        $schema['email'] = $point['email'];
+    }
+    return $schema;
 }

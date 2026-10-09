@@ -663,5 +663,10 @@ ADMIN_PASS_HASH=
 | `head.php` | Balises meta, OG, Twitter Cards, canonical, JSON-LD | `app/partials/head.php` |
 | `robots.txt` | Contrôle des crawlers | `public/robots.txt` |
 | `sitemap.php` | Sitemap XML dynamique | `public/sitemap.php`, routé via `index.php` |
+| `llms.txt` | Résumé factuel du site pour les assistants IA (GEO) : marque, ateliers, pages clés | `public/llms.txt` |
+| `paths.php` | `SITE_URL` : domaine public unique (canonical, Open Graph, sitemap, JSON-LD). Surchargeable par la variable d'environnement `SITE_URL` | `app/config/paths.php` |
+| `seo.php` | `siteUrl()`, `jsonLd()`, `atelierSchema()` (LocalBusiness avec GPS) | `app/helpers/seo.php` |
+
+**À vérifier à la mise en ligne** : `SITE_URL` (défaut `https://www.jaimelagalette.com`) et la ligne `Sitemap:` de `robots.txt` doivent correspondre au domaine définitif.
 
 Ce document doit servir de base unique de référence pour tout agent IA chargé de générer code, contenu ou documentation autour du projet "J'aime la Galette".

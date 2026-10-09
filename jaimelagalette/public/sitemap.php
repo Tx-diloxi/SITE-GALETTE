@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 header('Content-Type: application/xml; charset=utf-8');
 
-$baseUrl = 'https://www.jaimelagalette.com';
+require_once dirname(__DIR__) . '/app/config/paths.php';
+
+// Domaine public unique (SITE_URL)
+$baseUrl = SITE_URL;
 
 $pages = [
     '/'                                   => ['1.0', 'weekly'],

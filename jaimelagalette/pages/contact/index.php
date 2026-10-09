@@ -28,8 +28,12 @@ $carte       = $pdo->query("SELECT * FROM partial_Carte WHERE id = 1")->fetch();
 $pointsCarte = $pdo->query("SELECT * FROM point_Carte WHERE partial_carte_id = 1 AND est_ouvert = TRUE ORDER BY id")->fetchAll();
 
 // SEO
-$pageTitle = "Contact – J'aime la Galette | Fabricant de crêpes et galettes bretonnes";
-$pageDesc  = "Contactez J'aime la Galette : formulaire pour consommateurs et professionnels (GMS, restauration collective, traiteurs). Adresses de nos ateliers à Broons, Alençon et Angers.";
+$pageTitle = "Contact et ateliers – Galette de Broons | J'aime la Galette";
+$pageDesc  = "Contactez J'aime la Galette (La Galette de Broons) : formulaire pour consommateurs et professionnels (GMS, restauration, traiteurs) et coordonnées de nos 8 ateliers en Bretagne, Normandie et Pays de la Loire.";
+
+// JSON-LD : un LocalBusiness par atelier (coordonnées affichées sur la carte)
+require_once HELPERS . 'seo.php';
+$extraSchemas = array_map('atelierSchema', array_filter($pointsCarte, fn($p) => !empty($p['nom'])));
 
 include PARTIALS . 'head.php';
 include PARTIALS . 'header.php';
