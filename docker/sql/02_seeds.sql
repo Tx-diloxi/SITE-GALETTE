@@ -701,68 +701,103 @@ VALUES ('mentions-legales'),
     ('cookies'),
     ('confidentialite');
 
+-- Contenu juridique (octobre 2026), aligné sur ce que le site collecte réellement :
+-- seul cookie = PHPSESSID (pas de mesure d'audience), hébergeur, données des formulaires et du
+-- chatbot, bases légales, destinataires, durées de conservation, droits et réclamation CNIL.
+-- À faire valider par le responsable du site : hébergeur, e-mail de contact RGPD, durées.
+-- Les durées sont appliquées par app/cli/purge_donnees.php (à planifier en cron).
+
 -- Mentions légales
-INSERT INTO legal_Section (partial_legal_id, titre, contenu, ordre) VALUES
-(1, 'Propriétaire / Éditeur',
-'<p><strong>LA GALETTE DE BROONS</strong><br>
+
+INSERT INTO legal_Section (partial_legal_id, ordre, titre, contenu) VALUES
+(1, 1, 'Propriétaire / Éditeur', '<p><strong>LA GALETTE DE BROONS</strong><br>
 Zone Artisanale du Pilaga<br>
 22250 BROONS</p>
 <p>Siret : 402557763 00024</p>
 <p>N° de TVA intracommunautaire : FR 21 402557763</p>
-<p>Directeur de publication et Webmaster : Pascal Enault et Jean-Yves Pierre</p>', 1),
-(1, 'Réalisation graphique et technique',
-'<p>Communication Internet and Networks Solutions – CINS<br>
+<p>Directeur de publication et Webmaster : Pascal Enault et Jean-Yves Pierre</p>'),
+
+(1, 2, 'Hébergeur', '<p>Le site est hébergé par :</p>
+<p><strong>LWS (Ligne Web Services)</strong><br>
+10 rue de Penthièvre<br>
+75008 PARIS<br>
+Téléphone : 01 77 62 30 03<br>
+<a href="https://www.lws.fr" target="_blank" rel="noopener">www.lws.fr</a></p>'),
+
+(1, 3, 'Réalisation graphique et technique', '<p>Communication Internet and Networks Solutions – CINS<br>
 Agence Web Caen<br>
 9 rue Raymonde Bail<br>
-14000 CAEN</p>', 2),
-(1, 'Droit d\'auteur – Copyright – Réutilisation des contenus',
-'<p>Aucune reproduction de texte, visuel, logo ou autre iconographie n\'est autorisée, que ce soit sur support électronique ou papier.</p>', 3),
-(1, 'Données personnelles',
-'<p>Aucune information personnelle n\'est collectée à votre insu et/ou cédée à des tiers.</p>
-<p>Vous disposez d\'un droit d\'accès, de rectification et d\'opposition aux données vous concernant que vous pouvez exercer en contactant le Webmaster du site.</p>', 4),
-(1, 'Cookies et statistiques',
-'<p>En vue d\'améliorer l\'accessibilité et l\'ergonomie du site au besoin des internautes, nous mesurons le nombre de visites, le nombre de pages vues ainsi que l\'activité des visiteurs sur le site et leur fréquence de retour.</p>
-<p><a href="/cookies">Voir notre politique de cookies</a></p>', 5),
-(1, 'Formulaires en ligne',
-'<p>La plupart des informations fournies dans les formulaires en ligne sont obligatoires. Elles font l\'objet d\'un traitement informatisé par le gestionnaire du site et sont destinées aux membres et services du propriétaire/éditeur, ainsi qu\'au public désireux de s\'informer de l\'existence d\'un fichier dans les conditions prévues à l\'article 31 de la loi du 6 janvier 1978 modifiée.</p>
-<p>Vous pouvez exercer votre droit d\'accès et de rectification aux informations vous concernant en écrivant à la « LA GALETTE DE BROONS, Zone Artisanale du Pilaga, 22250 BROONS » ou par téléphone.</p>', 6);
+14000 CAEN</p>'),
 
--- Cookies
-INSERT INTO legal_Section (partial_legal_id, titre, contenu, ordre) VALUES
-(2, 'À quoi servent les cookies émis sur notre site ?',
-'<p>Seul l\'émetteur d\'un cookie est susceptible de lire ou de modifier des informations qui y sont contenues.</p>
-<p>Les cookies que nous émettons nous permettent :</p>
-<ul>
-    <li>d\'établir des statistiques et volumes de fréquentation et d\'utilisation des diverses éléments composant notre Site (rubriques et contenus visités, parcours), nous permettant d\'améliorer l\'intérêt et l\'ergonomie de nos Services ;</li>
-    <li>d\'adapter la présentation de notre Site aux préférences d\'affichage de votre Terminal (langue utilisée, résolution d\'affichage, système d\'exploitation utilisé, etc.) lors de vos visites sur notre Site, selon les matériels et les logiciels de visualisation ou de lecture que votre Terminal comporte ;</li>
-    <li>de mémoriser des informations relatives à un formulaire que vous avez rempli sur notre Site ;</li>
-    <li>de mettre en œuvre des mesures de sécurité.</li>
-</ul>', 1),
-(2, 'Vos choix concernant les cookies',
-'<p>Vous pouvez configurer votre logiciel de navigation de manière à ce que des cookies soient enregistrés dans votre Terminal ou, au contraire, qu\'ils soient rejetés, soit systématiquement, soit selon leur émetteur.</p>
-<p>Pour la gestion des cookies et de vos choix, la configuration de chaque navigateur est différente :</p>
-<ul>
-    <li><strong>Chrome :</strong> Menu &gt; Paramètres &gt; Confidentialité &gt; Paramètres de contenu &gt; Cookies</li>
-    <li><strong>Firefox :</strong> Outils &gt; Options &gt; Vie Privée &gt; Afficher les cookies</li>
-    <li><strong>Internet Explorer :</strong> Outils &gt; Options Internet &gt; Général &gt; Supprimer &gt; Cookies</li>
-    <li><strong>Safari :</strong> Menu &gt; Préférences &gt; Sécurité &gt; Afficher les cookies</li>
-</ul>', 2),
-(2, 'Désactiver Google Analytics',
-'<p>Nom du cookie utilisé : <strong>_ga</strong><br>
-Type de cookie : Cookies d\'audience</p>
-<p>Vous pouvez empêcher l\'utilisation et le dépôt de ce cookie sur votre poste en vous rendant sur <a href="https://tools.google.com/dlpage/gaoptout?hl=fr" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout?hl=fr</a>.</p>', 3);
+(1, 4, 'Droit d''auteur – Copyright – Réutilisation des contenus', '<p>Aucune reproduction de texte, visuel, logo ou autre iconographie n''est autorisée, que ce soit sur support électronique ou papier.</p>'),
 
--- Confidentialité
-INSERT INTO legal_Section (partial_legal_id, titre, contenu, ordre) VALUES
-(3, 'Collecte des données personnelles',
-'<p>Les informations recueillies via les formulaires de contact et de recrutement font l\'objet d\'un traitement informatisé destiné au gestionnaire du site. Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au RGPD, vous disposez d\'un droit d\'accès, de rectification, d\'opposition et de suppression des données vous concernant.</p>
-<p>Pour exercer ces droits, écrivez à : <strong>LA GALETTE DE BROONS, Zone Artisanale du Pilaga, 22250 BROONS</strong>.</p>', 1),
-(3, 'Destinataires des données',
-'<p>Les données collectées sont destinées aux services internes du propriétaire/éditeur du site. Elles ne sont en aucun cas cédées à des tiers sans votre accord explicite.</p>', 2),
-(3, 'Durée de conservation',
-'<p>Les données personnelles sont conservées pendant la durée nécessaire à la finalité du traitement et conformément aux obligations légales.</p>', 3),
-(3, 'Sécurité',
-'<p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour garantir la sécurité et la confidentialité de vos données personnelles.</p>', 4);
+(1, 5, 'Données personnelles', '<p>Les données personnelles que vous nous transmettez (formulaires de contact et de recrutement, assistant virtuel) ne sont jamais collectées à votre insu ni cédées à des tiers à des fins commerciales.</p>
+<p>Le détail des données collectées, de leurs finalités, de leur durée de conservation et de vos droits figure dans notre <a href="/politique-confidentialite">politique de confidentialité</a>.</p>
+<p>Pour exercer vos droits : <a href="mailto:siteweb@jaimelagalette.com">siteweb@jaimelagalette.com</a> ou par courrier à « LA GALETTE DE BROONS, Zone Artisanale du Pilaga, 22250 BROONS ».</p>'),
+
+(1, 6, 'Cookies', '<p>Ce site n''utilise aucun cookie publicitaire et aucun outil de mesure d''audience. Seul un cookie technique de session, nécessaire à la sécurité des formulaires, peut être déposé.</p>
+<p><a href="/cookies">Voir notre politique de cookies</a></p>'),
+
+(1, 7, 'Formulaires en ligne', '<p>Les champs marqués comme obligatoires dans les formulaires en ligne sont nécessaires au traitement de votre demande. Les informations sont destinées aux services concernés de LA GALETTE DE BROONS (relation client, ressources humaines).</p>
+<p>Conformément au règlement (UE) 2016/679 (RGPD) et à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée, vous disposez de droits sur vos données, présentés dans la <a href="/politique-confidentialite">politique de confidentialité</a>.</p>');
+
+-- Politique de cookies
+
+INSERT INTO legal_Section (partial_legal_id, ordre, titre, contenu) VALUES
+(2, 1, 'Qu''est-ce qu''un cookie ?', '<p>Un cookie est un petit fichier enregistré sur votre terminal (ordinateur, tablette, téléphone) lorsque vous consultez un site. Seul l''émetteur d''un cookie peut lire ou modifier les informations qu''il contient.</p>'),
+
+(2, 2, 'Les cookies utilisés sur ce site', '<p>Ce site n''utilise <strong>aucun cookie publicitaire</strong>, <strong>aucun cookie de réseau social</strong> et <strong>aucun outil de mesure d''audience</strong> (type Google Analytics).</p>
+<p>Un seul cookie technique peut être déposé :</p>
+<ul>
+    <li><strong>PHPSESSID</strong> : identifiant de session. Il n''est déposé que sur les pages comportant un formulaire (contact et recrutement). Il sert à protéger les formulaires contre les envois frauduleux (jeton de sécurité). Il ne contient aucune donnée personnelle et expire à la fermeture du navigateur.</li>
+</ul>
+<p>Ce cookie est strictement nécessaire au fonctionnement du service que vous demandez : il est dispensé de consentement. C''est pourquoi ce site n''affiche pas de bandeau de cookies.</p>'),
+
+(2, 3, 'Services tiers et adresse IP', '<p>Les polices de caractères et les bibliothèques techniques du site sont hébergées sur nos propres serveurs : leur affichage n''entraîne aucune requête vers un service tiers.</p>
+<p>Une exception : la carte interactive des sites de production (accueil, Le Groupe, contact et pages des ateliers) charge des fonds de carte auprès de <strong>Stadia Maps</strong> (<a href="https://stadiamaps.com/privacy/" target="_blank" rel="noopener">politique de confidentialité</a>), avec les données cartographiques d''OpenStreetMap. Pour afficher ces fonds de carte, votre navigateur transmet votre adresse IP à ce prestataire, sans dépôt de cookie.</p>'),
+
+(2, 4, 'Vos choix concernant les cookies', '<p>Vous pouvez configurer votre navigateur pour accepter ou refuser les cookies, ou pour être prévenu avant leur enregistrement. Refuser le cookie de session n''empêche pas de consulter le site, mais peut empêcher l''envoi des formulaires.</p>
+<ul>
+    <li><strong>Chrome :</strong> Paramètres &gt; Confidentialité et sécurité &gt; Cookies et autres données des sites</li>
+    <li><strong>Edge :</strong> Paramètres &gt; Cookies et autorisations de site &gt; Gérer et supprimer les cookies</li>
+    <li><strong>Firefox :</strong> Paramètres &gt; Vie privée et sécurité &gt; Cookies et données de sites</li>
+    <li><strong>Safari :</strong> Réglages &gt; Confidentialité &gt; Gérer les données de sites web</li>
+</ul>
+<p>Pour en savoir plus sur les cookies : <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs" target="_blank" rel="noopener">cnil.fr</a>.</p>'),
+
+(2, 5, 'Évolution de cette politique', '<p>Si un outil de mesure d''audience ou tout autre traceur nécessitant votre consentement était ajouté à ce site, un bandeau de choix serait mis en place et cette page serait mise à jour. Dernière mise à jour : octobre 2026.</p>');
+
+-- Politique de confidentialité
+
+INSERT INTO legal_Section (partial_legal_id, ordre, titre, contenu) VALUES
+(3, 1, 'Responsable du traitement', '<p><strong>LA GALETTE DE BROONS</strong><br>
+Zone Artisanale du Pilaga, 22250 BROONS<br>
+Contact pour toute question relative à vos données : <a href="mailto:siteweb@jaimelagalette.com">siteweb@jaimelagalette.com</a></p>
+<p>Dernière mise à jour : octobre 2026.</p>'),
+
+(3, 2, 'Données collectées, finalités et bases légales', '<p>Nous ne collectons que les données que vous saisissez vous-même :</p>
+<ul>
+    <li><strong>Formulaire de contact</strong> (grand public et professionnels) : nom, adresse e-mail, objet et contenu du message ; pour les professionnels, également société, secteur d''activité et numéro de téléphone (facultatif). <em>Finalité :</em> répondre à votre demande. <em>Base légale :</em> votre consentement (case à cocher).</li>
+    <li><strong>Formulaire de recrutement</strong> : prénom, nom, adresse e-mail, poste ou offre visé, site concerné, message de motivation et CV (fichier PDF ou document). <em>Finalité :</em> examiner votre candidature. <em>Base légale :</em> votre consentement et l''exécution de mesures précontractuelles prises à votre demande.</li>
+    <li><strong>Assistant virtuel</strong> : les questions que vous tapez, la page consultée et votre profil de visiteur (si vous l''indiquez). Aucune adresse IP ni identifiant n''est enregistré avec elles. <em>Finalité :</em> améliorer les réponses de l''assistant et la FAQ. <em>Base légale :</em> notre intérêt légitime. Nous vous demandons de ne pas y saisir de données personnelles.</li>
+</ul>
+<p>Le site ne dépose aucun cookie de suivi (voir la <a href="/cookies">politique de cookies</a>).</p>'),
+
+(3, 3, 'Destinataires des données', '<p>Vos données sont destinées aux seuls services internes concernés de LA GALETTE DE BROONS (relation client, ressources humaines, direction du site concerné). Elles ne sont ni vendues ni cédées à des tiers.</p>
+<p>Elles sont traitées pour notre compte par nos prestataires techniques : l''hébergeur du site (LWS, France) et notre service de messagerie électronique, par lequel les messages des formulaires nous sont transmis.</p>
+<p>La carte interactive du site fait appel à un prestataire de fonds de carte (Stadia Maps) qui reçoit votre adresse IP lors de l''affichage de la carte, comme indiqué dans la <a href="/cookies">politique de cookies</a>. Ce prestataire peut être établi en dehors de l''Union européenne.</p>'),
+
+(3, 4, 'Durée de conservation', '<ul>
+    <li><strong>Demandes de contact :</strong> 3 ans à compter du dernier échange avec vous, puis suppression.</li>
+    <li><strong>Candidatures et CV :</strong> 2 ans maximum après le dernier contact, puis suppression ; vous pouvez demander leur suppression à tout moment.</li>
+    <li><strong>Questions posées à l''assistant virtuel :</strong> 12 mois.</li>
+</ul>'),
+
+(3, 5, 'Vos droits', '<p>Vous disposez, sur vos données, des droits d''accès, de rectification, d''effacement, de limitation du traitement, d''opposition et de portabilité, ainsi que du droit de retirer votre consentement à tout moment et de définir des directives relatives au sort de vos données après votre décès.</p>
+<p>Pour les exercer, écrivez à <a href="mailto:siteweb@jaimelagalette.com">siteweb@jaimelagalette.com</a> ou à « LA GALETTE DE BROONS, Zone Artisanale du Pilaga, 22250 BROONS ». Nous pouvons vous demander un justificatif d''identité en cas de doute.</p>
+<p>Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la CNIL : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">www.cnil.fr/fr/plaintes</a> (Commission nationale de l''informatique et des libertés, 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07).</p>'),
+
+(3, 6, 'Sécurité', '<p>Les formulaires sont protégés contre les envois frauduleux, les données sont stockées sur des serveurs situés en France, l''accès à l''espace d''administration est protégé par authentification et les fichiers de CV ne sont accessibles qu''aux personnes habilitées.</p>');
 
 -- -----------------------------------------------
 -- VISITES MYSTÈRES

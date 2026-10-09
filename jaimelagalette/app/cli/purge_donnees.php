@@ -2,7 +2,7 @@
 /**
  * Purge des données personnelles arrivées en fin de conservation (RGPD).
  *
- * Durées annoncées dans la politique de confidentialité (docker/sql/03_legal_update.sql) :
+ * Durées annoncées dans la politique de confidentialité (docker/sql/02_seeds.sql) :
  *   - demandes de contact          : 3 ans
  *   - candidatures et CV           : 2 ans
  *   - questions de l'assistant     : 12 mois
