@@ -6,11 +6,16 @@ declare(strict_types=1);
 
 // Chemins racines (APP_ROOT, BASE_URL, WEB_ROOT)
 require_once __DIR__ . '/paths.php';
+require_once __DIR__ . '/env.php';
 
-// Identifiant administrateur depuis l'environnement ou valeur par défaut (dev local)
-define('ADMIN_USER', getenv('ADMIN_USER') ?: 'la-galette-admin');
-// Hash du mot de passe administrateur depuis l'environnement ou valeur par défaut (dev local)
-define('ADMIN_PASS_HASH', getenv('ADMIN_PASS_HASH') ?: password_hash('9?UqSACao3UcG#g!', PASSWORD_BCRYPT));
+// Identifiant et hash du mot de passe administrateur : variables d'environnement (Docker, fichier .env)
+// ou config.local.php (hébergeur). Aucun mot de passe par défaut : sans ADMIN_PASS_HASH, la connexion
+// à l'administration est impossible (voir config.local.example.php pour générer le hash).
+define('ADMIN_USER', env('ADMIN_USER', 'la-galette-admin'));
+define('ADMIN_PASS_HASH', env('ADMIN_PASS_HASH', ''));
+if (ADMIN_PASS_HASH === '') {
+    error_log('ADMIN_PASS_HASH non défini : connexion administrateur désactivée.');
+}
 // Nom de la session administrateur
 define('ADMIN_SESSION_NAME', 'jalg_admin');
 // Durée de vie de la session admin (2 heures en secondes)

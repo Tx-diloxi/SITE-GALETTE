@@ -9,14 +9,20 @@ declare(strict_types=1);
 // Définit le fuseau horaire par défaut sur Europe/Paris
 date_default_timezone_set('Europe/Paris');
 
-// Récupère les paramètres de connexion depuis les variables d'environnement ou valeurs par défaut
-$host = getenv('DB_HOST') ?: 'db';
+// Lecture de la configuration : variables d'environnement (Docker) ou config.local.php (hébergeur)
+require_once __DIR__ . '/app/config/env.php';
+
+// Affichage des erreurs PHP à l'écran : uniquement en développement (APP_DEBUG=1)
+ini_set('display_errors', env('APP_DEBUG', '0') === '1' ? '1' : '0');
+
+// Récupère les paramètres de connexion (valeurs par défaut : environnement Docker local)
+$host = env('DB_HOST', 'db');
 // Nom de la base de données
-$dbName = getenv('DB_NAME') ?: 'jaimelagalette';
+$dbName = env('DB_NAME', 'jaimelagalette');
 // Nom d'utilisateur MySQL
-$dbUser = getenv('DB_USER') ?: 'jalg_user';
+$dbUser = env('DB_USER', 'jalg_user');
 // Mot de passe MySQL
-$dbPass = getenv('DB_PASS') ?: '';
+$dbPass = env('DB_PASS', '');
 // Jeu de caractères UTF-8 pour la compatibilité Unicode
 $charset = 'utf8mb4';
 

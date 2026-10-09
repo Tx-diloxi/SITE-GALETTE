@@ -2,3 +2,10 @@
 
 # CV candidats uploadés (données personnelles)
 **/uploads/cv/*.pdf
+
+# Configuration de l'hébergeur (mots de passe) : jamais versionnée, modèle dans config.local.example.php
+jaimelagalette/config.local.php
+
+# Dossier généré par deploy-lws.sh (à uploader sur LWS)
+lws-ready/
+lws-ready.zip

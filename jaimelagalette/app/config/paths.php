@@ -21,7 +21,8 @@ if (!defined('WEB_ROOT')) {
 }
 
 // URL publique du site (sans slash final) : canonical, Open Graph, sitemap et données structurées.
-// À adapter au domaine définitif, ou à surcharger avec la variable d'environnement SITE_URL.
+// À adapter au domaine définitif : SITE_URL dans config.local.php (hébergeur) ou dans l'environnement.
 if (!defined('SITE_URL')) {
-    define('SITE_URL', rtrim((string)(getenv('SITE_URL') ?: 'https://www.jaimelagalette.com'), '/'));
+    require_once __DIR__ . '/env.php';
+    define('SITE_URL', rtrim((string)env('SITE_URL', 'https://www.jaimelagalette.com'), '/'));
 }
