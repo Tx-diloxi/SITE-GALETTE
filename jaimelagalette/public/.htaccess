@@ -2,6 +2,13 @@
     RewriteEngine On
     RewriteBase /
 
+    # Images WebP : si le navigateur l'accepte et qu'une version .webp existe à côté de l'image
+    # (générée par optimiser_images.py), on la sert à la place du PNG/JPEG, sans changer les URL.
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{REQUEST_FILENAME} \.(png|jpe?g)$ [NC]
+    RewriteCond %{REQUEST_FILENAME}.webp -f
+    RewriteRule ^(.+)$ $1.webp [T=image/webp,E=webp:1,L]
+
     # Redirige toutes les requêtes non-physiques vers index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -17,4 +24,42 @@
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     # Sécurité : protection contre le détournement de clic et les scripts non autorisés
     Header always set X-Permitted-Cross-Domain-Policies "none"
+</IfModule>
+
+# ── Performance ───────────────────────────────────────────────
+
+AddType image/webp .webp
+AddType font/woff2 .woff2
+
+# Compression des textes (HTML, CSS, JS, SVG, JSON, XML)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/javascript text/javascript application/json image/svg+xml application/ld+json
+</IfModule>
+
+# Cache navigateur : images et polices changent rarement (les envois admin ont un nom unique) ;
+# CSS et JS sont gardés 1 semaine car leurs noms ne portent pas de numéro de version.
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # La version WebP ou PNG/JPEG dépend de l'en-tête Accept : les caches doivent le savoir
+    Header append Vary Accept env=REDIRECT_webp
+    <FilesMatch "\.(woff2|webp|png|jpe?g|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
 </IfModule>
