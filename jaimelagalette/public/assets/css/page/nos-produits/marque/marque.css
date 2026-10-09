@@ -11,10 +11,13 @@
 }
 
 .vague-transition {
-  background: #111111;
   transform: rotate(180deg);
+  margin-top: -2px;
+  background: linear-gradient(to top, transparent 2px, #111111 2px);
 }
 
 #partenaires {
   background: #1E1E1E;
-}/*# sourceMappingURL=marque.css.map */
+}
+
+/*# sourceMappingURL=marque.css.map */

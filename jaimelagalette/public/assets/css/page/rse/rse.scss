@@ -5,8 +5,7 @@
 }
 
 .vague-transition {
-    transform: rotate(180deg);
-    background: $nuit;
+    @include vague-retournee($nuit);
 }
 
 #actions_rse .actions-rse-bloc:nth-child(1) {

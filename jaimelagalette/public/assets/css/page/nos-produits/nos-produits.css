@@ -9,14 +9,16 @@
 
 .vague-transparence-haut {
   transform: rotate(180deg);
+  margin-top: -2px;
+  background: linear-gradient(to top, transparent 2px, #1E1E1E 2px);
   width: 100%;
-  background-color: #1E1E1E;
 }
 
 .vague-transparence-bas {
   transform: rotate(180deg);
+  margin-top: -2px;
+  background: linear-gradient(to top, transparent 2px, #111111 2px);
   width: 100%;
-  background-color: #111111;
 }
 
 .vague-contact {
@@ -27,4 +29,6 @@
   .titre {
     width: 100%;
   }
-}/*# sourceMappingURL=nos-produits.css.map */
+}
+
+/*# sourceMappingURL=nos-produits.css.map */

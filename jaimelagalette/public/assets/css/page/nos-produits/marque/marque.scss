@@ -13,8 +13,7 @@
 }
 
 .vague-transition {
-    background: $nuit;
-    transform: rotate(180deg);
+    @include vague-retournee($nuit);
 }
 
 #partenaires {

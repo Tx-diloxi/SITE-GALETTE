@@ -4,7 +4,8 @@
 
 .vague-transition {
   transform: rotate(180deg);
-  background: #111111;
+  margin-top: -2px;
+  background: linear-gradient(to top, transparent 2px, #111111 2px);
 }
 
 #actions_rse .actions-rse-bloc:nth-child(1) {
@@ -23,4 +24,6 @@
 #a_propos > img:not(.vague) {
   width: auto !important;
   right: 10% !important;
-}/*# sourceMappingURL=rse.css.map */
+}
+
+/*# sourceMappingURL=rse.css.map */

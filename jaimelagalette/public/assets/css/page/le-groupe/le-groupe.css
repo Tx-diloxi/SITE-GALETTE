@@ -4,5 +4,8 @@
 
 .vague-animation {
   transform: rotate(180deg);
-  background: #050504;
-}/*# sourceMappingURL=le-groupe.css.map */
+  margin-top: -2px;
+  background: linear-gradient(to top, transparent 2px, #050504 2px);
+}
+
+/*# sourceMappingURL=le-groupe.css.map */

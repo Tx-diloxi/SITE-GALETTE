@@ -5,6 +5,5 @@
 }
 
 .vague-animation {
-    transform: rotate(180deg);
-    background: $livraison-bg;
+    @include vague-retournee($livraison-bg);
 }

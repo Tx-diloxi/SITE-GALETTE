@@ -64,3 +64,13 @@ $marge-left : 140px;
 // Débord (sous/sur la section voisine) des vagues décoratives : masque le filet clair
 // qui apparaît à la jointure quand la hauteur de l'image tombe sur un pixel fractionnaire
 $vague-overlap : 2px;
+
+// Vague retournée (rotate 180°) dans le flux : la couleur de fond de l'image ($fond) sert à
+// prolonger le bas de la vague. Elle ne doit pas dépasser sur le bord haut visuel (le bord plein
+// de l'image) : à cheval sur un demi-pixel, elle dessinerait un filet sombre sur la zone voisine.
+// Ces 2px transparents laissent voir la section précédente : la vague la chevauche donc d'autant.
+@mixin vague-retournee($fond) {
+    transform: rotate(180deg);
+    margin-top: -$vague-overlap;
+    background: linear-gradient(to top, transparent $vague-overlap, $fond $vague-overlap);
+}

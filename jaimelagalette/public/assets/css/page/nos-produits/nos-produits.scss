@@ -10,15 +10,13 @@
 }
 
 .vague-transparence-haut {
-    transform: rotate(180deg);
+    @include vague-retournee($anthracite);
     width: 100%;
-    background-color: $anthracite;
 }
 
 .vague-transparence-bas {
-    transform: rotate(180deg);
+    @include vague-retournee($nuit);
     width: 100%;
-    background-color: $nuit;
 }
 
 .vague-contact {

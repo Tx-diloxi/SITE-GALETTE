@@ -1,1 +1,1 @@
-{"version":3,"sources":["marque.scss","../../../_variables.scss","marque.css"],"names":[],"mappings":"AAEA;EACI,mBCIU;ACLd;;AFIA;EACI,mBAAA;AEDJ;;AFIA;EACI,mBCRI;ACOR;;AFIA;EACI,mBCZI;EDaJ,yBAAA;AEDJ;;AFIA;EACI,mBCbU;ACYd","file":"marque.css"}
+{"version":3,"sourceRoot":"","sources":["marque.scss","../../../_variables.scss"],"names":[],"mappings":"AAEA;EACI,YCMU;;;ADHd;EACI,YCEU;;;ADCd;EACI,YCNI;;;ADSR;EC0DI;EACA;EACA;;;ADxDJ;EACI,YCVU","file":"marque.css"}
