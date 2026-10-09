@@ -4,48 +4,60 @@
 #partenaires .carrousel-conteneur {
   width: 100%;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to right, transparent, #111111 30%, #111111 70%, transparent);
-          mask-image: linear-gradient(to right, transparent, #111111 30%, #111111 70%, transparent);
+  mask-image: linear-gradient(to right, transparent, #111111 30%, #111111 70%, transparent);
 }
 #partenaires .carrousel-piste {
   display: flex;
-  gap: 40px;
-  width: -moz-max-content;
   width: max-content;
+  padding: 0;
   will-change: transform;
-  animation: defilement-partenaires 25s linear infinite;
+  animation: defilement-partenaires var(--duree, 25s) linear infinite;
 }
 #partenaires .carrousel-piste:hover {
   animation-play-state: paused;
 }
+#partenaires .carrousel-groupe {
+  display: flex;
+  flex-shrink: 0;
+  gap: 40px;
+  padding: 0 40px 0 0;
+}
+#partenaires .carrousel-piste[data-orange] .logo-partenaires:not([data-pret]) {
+  opacity: 0;
+}
 #partenaires .logo-partenaires {
   width: auto;
   height: 80px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   flex-shrink: 0;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: brightness(0.9);
+  transition: transform 0.3s ease, opacity 0.4s ease;
 }
 #partenaires .logo-partenaires:hover {
   transform: scale(1.08);
-  filter: brightness(1.1);
 }
 
 @keyframes defilement-partenaires {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
-    transform: translateX(-50%);
+  to {
+    transform: translateX(calc(-1 * var(--decalage, 50%)));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #partenaires .carrousel-piste {
+    animation: none;
   }
 }
 @media (max-width: 768px) {
-  #partenaires .carrousel-piste {
+  #partenaires .carrousel-groupe {
     gap: 24px;
+    padding: 0 24px 0 0;
   }
   #partenaires .logo-partenaires {
     width: 110px;
     height: 60px;
   }
-}/*# sourceMappingURL=partenaires.css.map */
+}
+
+/*# sourceMappingURL=partenaires.css.map */
