@@ -278,8 +278,8 @@ require_once __DIR__ . '/../layout/header.php';
     </form>
 </main>
 <!-- Inclusion de la bibliothèque Leaflet pour la carte interactive -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/assets/lib/leaflet/leaflet.css" />
+<script src="/assets/lib/leaflet/leaflet.js"></script>
 <!-- Script JavaScript pour la carte et le géocodage -->
 <script>
 (function() {

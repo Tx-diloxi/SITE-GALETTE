@@ -9,7 +9,7 @@ if (!$carteStyleLoaded): $carteStyleLoaded = true;
 <!-- Inclut la feuille de style CSS spécifique aux popups Leaflet du partial carte -->
 <link rel="stylesheet" href="/assets/css/partials/carte/card-carte.css">
 <!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="/assets/lib/leaflet/leaflet.css" />
 <?php endif; ?>
 
 <?php
@@ -51,7 +51,7 @@ if ($carte):
 </section>
 
 <!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/assets/lib/leaflet/leaflet.js"></script>
 <script>
 const map = L.map('map').setView([48.083328, -1.68333], 6);
 

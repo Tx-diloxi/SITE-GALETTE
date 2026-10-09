@@ -1,0 +1,2 @@
+Polices auto-hébergées (RGPD : pas de requête vers Google).
+- Montserrat et Dancing Script : SIL Open Font License 1.1, https://fonts.google.com
