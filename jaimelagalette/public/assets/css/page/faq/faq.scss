@@ -170,8 +170,13 @@
                             }
                         }
 
+                        // Les questions longues passent à la ligne (le style global des boutons
+                        // force une seule ligne : le texte était coupé et la flèche sortait de l'écran)
                         .faq-question-text {
                             flex: 1;
+                            min-width: 0;
+                            white-space: normal;
+                            overflow-wrap: anywhere;
                         }
 
                         .faq-question-icon {
