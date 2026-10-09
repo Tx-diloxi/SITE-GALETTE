@@ -63,6 +63,7 @@
 #produits img.vague {
   position: absolute;
   top: 0;
+  margin-top: -2px;
   left: 0;
   width: 100%;
   height: auto;
@@ -126,4 +127,6 @@
   .breadcrumb {
     padding: 16px 5%;
   }
-}/*# sourceMappingURL=produits.css.map */
+}
+
+/*# sourceMappingURL=produits.css.map */

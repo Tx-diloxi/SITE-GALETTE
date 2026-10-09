@@ -260,6 +260,14 @@ section {
     gap: 2rem;
 }
 
+// Vagues decoratives : leur couleur de remplissage est celle de la section voisine, on les
+// fait donc deborder de quelques pixels pour que la jointure ne laisse jamais voir la
+// texture du body (image en pleine largeur = hauteur decimale = bord sur un demi-pixel).
+// Vagues ancrees en bas ou dans le flux : debord vers le bas.
+img[class*="vague"] {
+    margin-bottom: -$vague-overlap;
+}
+
 // Fond anthracite pour les vagues decoratives du contact et engagements
 .vague-contact, .vague-engagements {
     // Fond de couleur anthracite

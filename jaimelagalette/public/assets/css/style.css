@@ -11,7 +11,7 @@ html, body {
 }
 
 body {
-  font-family: "Montserrat", light;
+  font-family: "Montserrat", sans-serif;
   background-image: url("/assets/images/hero-bg.jpg");
   background-repeat: no-repeat;
   background-position: center;
@@ -60,7 +60,6 @@ p {
 
 button {
   display: inline-block;
-  width: -moz-fit-content;
   width: fit-content;
   padding: 10px 20px;
   font-weight: 700;
@@ -145,6 +144,10 @@ section div {
   gap: 2rem;
 }
 
+img[class*=vague] {
+  margin-bottom: -2px;
+}
+
 .vague-contact, .vague-engagements {
   background: #1E1E1E;
 }
@@ -193,4 +196,6 @@ section div {
   .card img {
     height: 50px;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+
+/*# sourceMappingURL=style.css.map */

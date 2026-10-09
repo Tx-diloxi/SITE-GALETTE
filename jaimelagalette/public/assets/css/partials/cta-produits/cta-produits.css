@@ -63,6 +63,7 @@
 #produits img.vague {
   position: absolute;
   top: 0;
+  margin-top: -2px;
   left: 0;
   width: 100%;
   height: auto;
@@ -88,4 +89,6 @@
   #produits .grid-2 .card p:nth-child(3) {
     max-width: 100%;
   }
-}/*# sourceMappingURL=cta-produits.css.map */
+}
+
+/*# sourceMappingURL=cta-produits.css.map */

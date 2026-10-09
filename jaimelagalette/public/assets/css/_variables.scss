@@ -60,3 +60,7 @@ $logo-width : auto;
 
 // Marge generale a gauche utilisee dans certains layouts specifiques
 $marge-left : 140px;
+
+// Débord (sous/sur la section voisine) des vagues décoratives : masque le filet clair
+// qui apparaît à la jointure quand la hauteur de l'image tombe sur un pixel fractionnaire
+$vague-overlap : 2px;
