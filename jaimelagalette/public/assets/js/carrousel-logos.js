@@ -125,6 +125,9 @@
 
         var logos = Array.prototype.slice.call(group.querySelectorAll('img'));
         var orange = track.hasAttribute('data-orange');
+        // Piste à recolorer : on ne construit la boucle qu'une fois tous les logos prêts, en un seul
+        // passage (sinon les copies seraient créées avec les images d'origine puis refaites à chaque logo)
+        var attente = orange;
 
         // (Re)construit la boucle : duplique le groupe pour remplir l'écran (+1 groupe de marge)
         // et règle le décalage sur la largeur exacte d'un groupe (espace final compris).
@@ -148,7 +151,7 @@
         // (chargement des logos, recoloration, redimensionnement de la fenêtre)
         var planifie = false;
         function planifier() {
-            if (planifie) return;
+            if (planifie || attente) return;
             planifie = true;
             setTimeout(function () { planifie = false; reconstruire(); }, 0);
         }
@@ -168,7 +171,13 @@
 
         // ── Recoloration en orange brûlé ──
         // Un logo reste invisible tant qu'il n'est pas recoloré (pas de flash des couleurs d'origine)
-        function marquerPret(img) { img.dataset.pret = '1'; }
+        function marquerPret(img) {
+            img.dataset.pret = '1';
+            if (attente && logos.every(function (l) { return l.dataset.pret; })) {
+                attente = false;
+                planifier();
+            }
+        }
         function marquerCopies(origine) {
             track.querySelectorAll('img').forEach(function (copie) {
                 if (copie.dataset.origine === origine) marquerPret(copie);
@@ -238,7 +247,12 @@
         // Un logo en chargement différé et hors écran ne se chargerait jamais : on doit pouvoir le lire.
         // Ces logos sont minuscules, le chargement immédiat ne coûte presque rien.
         logos.forEach(function (img) { img.loading = 'eager'; });
+        // Une même image peut apparaître plusieurs fois : on ne la recolore qu'une fois,
+        // le résultat est ensuite appliqué à toutes ses copies (voir appliquer)
+        var dejaVu = {};
         logos.forEach(function (img) {
+            if (dejaVu[img.dataset.origine]) return;
+            dejaVu[img.dataset.origine] = true;
             var traiter = function () {
                 if (img.naturalWidth) {
                     recolorer(img);
@@ -247,7 +261,9 @@
                 }
                 planifier();
             };
-            if (img.complete) {
+            // Image réellement chargée : on la traite. Sinon on attend son événement (un logo en
+            // chargement différé peut afficher complete = true sans avoir commencé à charger).
+            if (img.complete && img.naturalWidth) {
                 traiter();
             } else {
                 img.addEventListener('load', traiter, { once: true });
@@ -255,6 +271,7 @@
             }
         });
         setTimeout(function () {
+            attente = false;
             track.querySelectorAll('img').forEach(marquerPret);
             planifier();
         }, 4000);
