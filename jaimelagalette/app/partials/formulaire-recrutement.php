@@ -206,8 +206,9 @@ $formSucces  = $formResult['success'] ?? false;
                         <input type="checkbox" name="rgpd" value="1" required
                             <?= !empty($_POST['rgpd']) ? 'checked' : '' ?>>
                         <span>
-                            J'accepte que mes données soient traitées dans le cadre de ma candidature. Pour en savoir
-                            plus, consultez notre <a href="/politique-confidentialite">politique de confidentialité</a>.
+                            J'accepte que mes données (dont mon CV) soient traitées dans le cadre de ma candidature
+                            et conservées 2 ans maximum. Droits et contact : consultez notre
+                            <a href="/politique-confidentialite">politique de confidentialité</a>.
                         </span>
                     </label>
                     <?php if (!empty($formErreurs['rgpd'])) : ?>

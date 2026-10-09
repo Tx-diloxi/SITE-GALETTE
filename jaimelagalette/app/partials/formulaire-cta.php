@@ -176,8 +176,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="checkbox" name="rgpd" value="1" required
                                 <?= !empty($_POST['rgpd']) ? 'checked' : '' ?>>
                             <span>
-                                J'accepte que les données saisies soient utilisées pour me recontacter.
-                                Consultez notre <a href="/politique-confidentialite">politique de confidentialité</a>.
+                                J'accepte que les informations saisies soient utilisées pour traiter ma demande et me
+                                recontacter. Durée de conservation, droits et contact : consultez notre
+                                <a href="/politique-confidentialite">politique de confidentialité</a>.
                             </span>
                         </label>
                         <?php if (!empty($formErreurs['rgpd'])) : ?>
@@ -324,8 +325,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="checkbox" name="rgpd" value="1" required
                                 <?= !empty($_POST['rgpd']) ? 'checked' : '' ?>>
                             <span>
-                                J'accepte que les données saisies soient utilisées pour me recontacter.
-                                Consultez notre <a href="/politique-confidentialite">politique de confidentialité</a>.
+                                J'accepte que les informations saisies soient utilisées pour traiter ma demande et me
+                                recontacter. Durée de conservation, droits et contact : consultez notre
+                                <a href="/politique-confidentialite">politique de confidentialité</a>.
                             </span>
                         </label>
                         <?php if (!empty($formErreurs['rgpd'])) : ?>

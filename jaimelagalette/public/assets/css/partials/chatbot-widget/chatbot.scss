@@ -323,6 +323,20 @@
     flex-shrink: 0;
 }
 
+.chatbot-notice {
+    margin: 0;
+    padding: 0 16px 10px;
+    background: $anthracite;
+    color: $gris-text;
+    font-size: 11px;
+    line-height: 1.4;
+    flex-shrink: 0;
+
+    a {
+        color: $orange-galette;
+    }
+}
+
 .chatbot-input {
     flex: 1;
     padding: 10px 14px;

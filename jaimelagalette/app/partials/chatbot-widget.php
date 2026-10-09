@@ -80,6 +80,12 @@ if (!$chatbotWidgetStyleLoaded): $chatbotWidgetStyleLoaded = true; ?>
         </svg>
       </button>
     </form>
+
+    <!-- Information RGPD : les questions saisies sont enregistrées -->
+    <p class="chatbot-notice">
+      Ne saisissez pas de données personnelles. Vos questions sont enregistrées pour améliorer nos réponses.
+      <a href="/politique-confidentialite">En savoir plus</a>
+    </p>
   </div>
 </div>
 
