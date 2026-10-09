@@ -44,6 +44,10 @@ foreach ($listeProduits as $produit) {
     ];
 }
 
+// --- Section "À propos" rendue par le serveur : celle du premier produit affiché ---
+// (le carrousel JS ne la remplace qu'au changement de slide)
+$apropos = $produitsData[$listeProduits[0]['id'] ?? 0]['apropos'] ?? null;
+
 // --- Titres du carrousel (depuis le premier produit) ---
 $titre = $listeProduits[0]['sous_titre'] ?? 'Nos produits';
 $sousTitre = $listeProduits[0]['titre'] ?? 'Découvrez notre gamme';

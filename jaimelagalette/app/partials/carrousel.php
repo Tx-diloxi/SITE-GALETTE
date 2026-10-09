@@ -23,6 +23,11 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
     $listeProduits = $listeProduitsEnriched;
 ?>
 
+<?php if (!empty($listeProduits[0]['image'])): ?>
+<!-- Précharge l'image du premier produit : elle est insérée par le script, le navigateur ne la découvrirait que tard -->
+<link rel="preload" as="image" href="<?= htmlspecialchars($listeProduits[0]['image'], ENT_QUOTES, 'UTF-8') ?>" fetchpriority="high">
+<?php endif; ?>
+
 <section id="carrousel">
 
     <div class="titre">
@@ -47,8 +52,8 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
     <!-- Infos produit actif -->
     <div class="carrousel-produits__infos">
         <h3 class="carrousel-produits__marque" id="produit-marque">
-            <?= htmlspecialchars($marque, ENT_QUOTES, 'UTF-8') ?></h3>
-        <h2 class="carrousel-produits__nom-produit" id="produit-nom"></h2>
+            <?= htmlspecialchars($listeProduits[0]['marque'] ?? '', ENT_QUOTES, 'UTF-8') ?></h3>
+        <h2 class="carrousel-produits__nom-produit" id="produit-nom"><?= htmlspecialchars($listeProduits[0]['nom'] ?? '', ENT_QUOTES, 'UTF-8') ?></h2>
         <a href="#a_propos" class="carrousel-produits__cta" id="produit-cta">DÉTAILS</a>
     </div>
 
@@ -161,7 +166,8 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
     }
 
     // Met à jour l'affichage des 3 slides et la section À propos
-    function updateProductContent() {
+    // (initial : le serveur a déjà rendu la section À propos du premier produit, on ne la refait pas)
+    function updateProductContent(initial) {
         const activeProduct = produitsArray[currentIndex];
 
         // Met à jour les infos texte du carrousel
@@ -174,13 +180,14 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
 
         // Met à jour la section À propos avec les données du produit actif
         const produitId = activeProduct.id;
-        if (produitsData && produitsData[produitId] && produitsData[produitId].apropos) {
+        const dejaRendue = initial && document.querySelector('#a_propos') && document.querySelector('#a_propos').children.length > 0;
+        if (!dejaRendue && produitsData && produitsData[produitId] && produitsData[produitId].apropos) {
             updateAproposSection(produitsData[produitId].apropos);
         }
     }
 
     // Met à jour l'affichage des 3 slides
-    function renderSlides() {
+    function renderSlides(initial) {
         if (totalSlides === 0) return;
 
         const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
@@ -201,7 +208,7 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
             <article class="carrousel-produits__slide actif" data-index="${currentIndex}">
                 <div class="carrousel-produits__img-wrap">
                     <a href="${escapeHtml(activeProduct.page_url)}">
-                    <img src="${escapeHtml(activeProduct.image)}" alt="${escapeHtml(activeProduct.nom)}" loading="eager">
+                    <img src="${escapeHtml(activeProduct.image)}" alt="${escapeHtml(activeProduct.nom)}" loading="eager" fetchpriority="high">
                     </a>
                 </div>
             </article>
@@ -215,7 +222,7 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
         `;
 
         // Met à jour le contenu texte et la section À propos
-        updateProductContent();
+        updateProductContent(initial === true);
 
         // Ré-attache les événements sur les nouveaux slides
         attachSlideEvents();
@@ -263,10 +270,10 @@ if (!empty($listeProduits) && is_array($listeProduits) && count($listeProduits) 
     // Initialisation
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            renderSlides();
+            renderSlides(true);
         });
     } else {
-        renderSlides();
+        renderSlides(true);
     }
 })();
 </script>
